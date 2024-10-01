@@ -11,7 +11,7 @@ Capture tasks, manage projects, and take notes with confidence — just like Ben
 - **Frictionless task setup** — Start tasks from anywhere, even while taking notes, to keep your workflow smooth.
 - **Label all the things** — Tag your tasks and notes for easy searching and organization.
 - **Full data control** — Export your data at anytime.
-- 
+
 ## Architecture
 
 Powered by Next.js, Electron, and TipTap.
