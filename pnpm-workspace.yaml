@@ -1,3 +1,3 @@
 packages:
-  - "apps/*"
-  - "packages/*"
+  - "apps/*" # applications and services
+  - "packages/*" # everything else, like libraries and tooling
