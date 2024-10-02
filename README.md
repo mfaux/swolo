@@ -12,6 +12,8 @@ Capture tasks, manage projects, and take notes with confidence — just like Ben
 - **Label all the things** — Tag your tasks and notes for easy searching and organization.
 - **Full data control** — Export your data at anytime.
 
+![](./img/do-you-even.png)
+
 ## Architecture
 
 Powered by Next.js, Electron, and TipTap. Monorepo managed by Turborepo.
