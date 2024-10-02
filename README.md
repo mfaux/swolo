@@ -12,46 +12,30 @@ Capture tasks, manage projects, and take notes with confidence — just like Ben
 - **Label all the things** — Tag your tasks and notes for easy searching and organization.
 - **Full data control** — Export your data at anytime.
 
-![](./img/do-you-even.png)
-
 ## Architecture
 
-Powered by Next.js, Electron, and TipTap. Monorepo managed by Turborepo.
+Powered by Next.js, Electron, and TipTap.
 
-> _Currently vaporware at its finest._
+## Contributing
 
-## Monorepo structure
+Please read the [contributing guide](/CONTRIBUTING.md).
 
-- `docs`: a [Next.js](https://nextjs.org/) app
-- `web`: another [Next.js](https://nextjs.org/) app
-- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
-- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
-- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
+## License
 
-## Install
+Licensed under the [MIT license](https://github.com/shadcn/ui/blob/main/LICENSE.md).
 
-```
-pnpm install
-```
+<br/>
 
-## Build
+<br/>
 
-To build all apps and packages, run the following command:
+<br/>
 
-```
-pnpm build
-```
+. . .
 
-## Develop
+<br/>
 
-To develop all apps and packages, run the following command:
+<br/>
 
-```
-pnpm dev
-```
+<br/>
 
-To develop just the web app, run the following command:
-
-```
-pnpm dev:web
-```
+![Ben Swolo meme](./img/do-you-even.png)
