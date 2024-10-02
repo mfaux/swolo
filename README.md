@@ -14,9 +14,42 @@ Capture tasks, manage projects, and take notes with confidence — just like Ben
 
 ## Architecture
 
-Powered by Next.js, Electron, and TipTap.
+Powered by Next.js, Electron, and TipTap. Monorepo managed by Turborepo.
 
-> *Currently vaporware at its finest.*
+> _Currently vaporware at its finest._
 
+## Monorepo structure
 
+- `docs`: a [Next.js](https://nextjs.org/) app
+- `web`: another [Next.js](https://nextjs.org/) app
+- `@repo/ui`: a stub React component library shared by both `web` and `docs` applications
+- `@repo/eslint-config`: `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`)
+- `@repo/typescript-config`: `tsconfig.json`s used throughout the monorepo
 
+## Install
+
+```
+pnpm install
+```
+
+## Build
+
+To build all apps and packages, run the following command:
+
+```
+pnpm build
+```
+
+## Develop
+
+To develop all apps and packages, run the following command:
+
+```
+pnpm dev
+```
+
+To develop just the web app, run the following command:
+
+```
+pnpm dev:web
+```
