@@ -1,8 +1,12 @@
 # swolo 👖
 
-Inspired by the GTD methodology and Ben Solo's iconic shirtless scene, **Swolo** is a cross-platform project management and note-taking app designed for a party of one.
+Inspired by the
+[Getting Things Done](https://en.wikipedia.org/wiki/Getting_Things_Done)
+methodology and Ben Solo's iconic shirtless scene, **Swolo** is a cross-platform
+project management and note-taking app designed for a party of one.
 
-Capture tasks, manage projects, and take notes with confidence — just like Ben, you’re in control of the Force (and your workload).
+Capture tasks, manage projects, and take notes with confidence — just like Ben,
+you're swol enough to handle anything your workload throws at you.
 
 ## Guiding principles
 

@@ -17,6 +17,7 @@ This repository is structured as follows:
 
 | Path                          | Description                                                                          |
 | ----------------------------- | ------------------------------------------------------------------------------------ |
+| `apps/desktop`                | The Electron + vite Swolo desktop application                                        |
 | `apps/web`                    | The Next.js application for the Swolo website                                        |
 | `apps/docs `                  | User-facing documentation for Swolo                                                  |
 | `packages/ui `                | A stub React component library shared by the applications                            |
