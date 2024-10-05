@@ -8,6 +8,8 @@ methodology and Ben Solo's iconic shirtless scene, Swolo is a cross-platform
 Capture tasks, manage projects, and take notes with confidence — just like Ben,
 you're swol enough to handle anything your workload throws at you.
 
+> Currently vaporware. Stay tuned for updates.
+
 ## Guiding principles
 
 - **Effortless capture** — Quickly capture tasks and ideas, clearing your mind of distractions for later processing.
@@ -15,10 +17,6 @@ you're swol enough to handle anything your workload throws at you.
 - **Frictionless task setup** — Start tasks from anywhere, even while taking notes, to keep your workflow smooth.
 - **Label all the things** — Tag your tasks and notes for easy searching and organization.
 - **Full data control** — Export your data at anytime.
-
-## Architecture
-
-Powered by Next.js, Electron, and TipTap.
 
 ## Contributing
 
