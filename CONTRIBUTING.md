@@ -17,11 +17,10 @@ This repository is structured as follows:
 
 | Path                          | Description                                                                          |
 | ----------------------------- | ------------------------------------------------------------------------------------ |
-| `apps/desktop`                | The Electron + vite Swolo desktop application                                        |
 | `apps/web`                    | The Next.js application for the Swolo website                                        |
-| `apps/docs `                  | User-facing documentation for Swolo                                                  |
-| `packages/ui `                | A stub React component library shared by the applications                            |
-| `packages/eslint-config `     | `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`) |
+| `packages/ui`                 | A stub React component library shared by the applications                            |
+| `packages/eslint-config`      | `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`) |
+| `packages/tailwind-config`    | `tailwind.config` for importing into presets of local `tailwind.config.ts` files     |
 | `packages/typescript-config ` | `tsconfig.json`s used throughout the monorepo                                        |
 
 ## Development
