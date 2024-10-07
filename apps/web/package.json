@@ -10,9 +10,11 @@
   },
   "dependencies": {
     "@repo/ui": "workspace:*",
+    "clsx": "^2.1.1",
     "next": "14.2.6",
     "react": "18.3.1",
-    "react-dom": "18.3.1"
+    "react-dom": "18.3.1",
+    "tailwind-merge": "^2.5.3"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
@@ -26,6 +28,7 @@
     "eslint-config-next": "14.2.6",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "typescript": "^5.6.2",
+    "typescript-plugin-css-modules": "^5.1.0"
   }
 }
