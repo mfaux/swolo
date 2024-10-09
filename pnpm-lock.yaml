@@ -20,6 +20,9 @@ importers:
 
   apps/web:
     dependencies:
+      '@repo/core':
+        specifier: workspace:*
+        version: link:../../packages/core
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -79,6 +82,31 @@ importers:
         specifier: ^5.1.0
         version: 5.1.0(ts-node@10.9.1(@types/node@20.11.24)(typescript@5.6.2))(typescript@5.6.2)
 
+  packages/core:
+    dependencies:
+      lucide-react:
+        specifier: ^0.451.0
+        version: 0.451.0(react@18.3.1)
+    devDependencies:
+      '@repo/eslint-config':
+        specifier: workspace:*
+        version: link:../eslint-config
+      '@repo/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/eslint':
+        specifier: ^8.56.5
+        version: 8.56.5
+      '@types/node':
+        specifier: ^20.11.24
+        version: 20.11.24
+      eslint:
+        specifier: ^8.57.0
+        version: 8.57.0
+      typescript:
+        specifier: ^5.6.2
+        version: 5.6.2
+
   packages/eslint-config:
     devDependencies:
       '@typescript-eslint/eslint-plugin':
@@ -108,17 +136,32 @@ importers:
       '@repo/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
+      '@types/node':
+        specifier: ^22.7.5
+        version: 22.7.5
       tailwindcss:
         specifier: ^3.4.1
-        version: 3.4.13(ts-node@10.9.1(@types/node@20.11.24)(typescript@5.6.2))
+        version: 3.4.13(ts-node@10.9.1(@types/node@22.7.5)(typescript@5.6.2))
 
   packages/typescript-config: {}
 
   packages/ui:
     dependencies:
+      '@radix-ui/react-slot':
+        specifier: ^1.1.0
+        version: 1.1.0(@types/react@18.2.61)(react@18.2.0)
+      '@repo/core':
+        specifier: workspace:*
+        version: link:../core
+      class-variance-authority:
+        specifier: ^0.7.0
+        version: 0.7.0
       clsx:
         specifier: ^2.1.1
         version: 2.1.1
+      lucide-react:
+        specifier: ^0.451.0
+        version: 0.451.0(react@18.2.0)
       react:
         specifier: ^18.2.0
         version: 18.2.0
@@ -437,6 +480,24 @@ packages:
     resolution: {integrity: sha512-POgTXhjrTfbTV63DiFXav4lBHiICLKKwDeaKn9Nphwj7WH6m0hMMCaJkMyRWjgtPFyRKRVoMXXjczsTQRDEhYw==}
     engines: {node: ^12.20.0 || ^14.18.0 || >=16.0.0}
 
+  '@radix-ui/react-compose-refs@1.1.0':
+    resolution: {integrity: sha512-b4inOtiaOnYf9KWyO3jAeeCG6FeyfY6ldiEPanbUjWd+xIk5wZeHa8yVwmrJ2vderhu/BQvzCrJI0lHd+wIiqw==}
+    peerDependencies:
+      '@types/react': '*'
+      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+
+  '@radix-ui/react-slot@1.1.0':
+    resolution: {integrity: sha512-FUCf5XMfmW4dtYl69pdS4DbxKy8nj4M7SafBgPllysxmdachynNflAdp/gCsnYWNDnge6tI9onzMp5ARYc1KNw==}
+    peerDependencies:
+      '@types/react': '*'
+      react: ^16.8 || ^17.0 || ^18.0 || ^19.0 || ^19.0.0-rc
+    peerDependenciesMeta:
+      '@types/react':
+        optional: true
+
   '@rushstack/eslint-patch@1.5.1':
     resolution: {integrity: sha512-6i/8UoL0P5y4leBIGzvkZdS85RDMG9y1ihZzmTZQ5LdHUYmZ7pKFoj8X0236s3lusPs1Fa5HTQUpwI+UfTcmeA==}
 
@@ -492,6 +553,9 @@ packages:
 
   '@types/node@20.11.24':
     resolution: {integrity: sha512-Kza43ewS3xoLgCEpQrsT+xRo/EJej1y0kVYGiLFE1NEODXGzTfwiC6tXTLMQskn1X4/Rjlh0MQUvx9W+L9long==}
+
+  '@types/node@22.7.5':
+    resolution: {integrity: sha512-jML7s2NAzMWc//QSJ1a3prpk78cOPchGvXJsC3C6R6PSMoooztvRVQEz89gmBTBY1SPMaqo5teB4uNHPdetShQ==}
 
   '@types/normalize-package-data@2.4.4':
     resolution: {integrity: sha512-37i+OaWTh9qeK4LSHPsyRC7NahnGotNuZvjLSgcPzblpHB3rrCJxAOgI5gCdKm7coonsaX1Of0ILiTcnZjbfxA==}
@@ -926,6 +990,9 @@ packages:
     resolution: {integrity: sha512-NIxF55hv4nSqQswkAeiOi1r83xy8JldOFDTWiug55KBu9Jnblncd2U6ViHmYgHf01TPZS77NJBhBMKdWj9HQMQ==}
     engines: {node: '>=8'}
 
+  class-variance-authority@0.7.0:
+    resolution: {integrity: sha512-jFI8IQw4hczaL4ALINxqLEXQbWcNjoSkloa4IaufXCJr6QawJyw7tuRysRsrE8w2p/4gGaxKIt/hX3qz/IbD1A==}
+
   clean-regexp@1.0.0:
     resolution: {integrity: sha512-GfisEZEJvzKrmGWkvfhgzcz/BllN1USeqD2V6tg14OAOgaCD2Z/PUEuxnAZ/nPvmaHRG7a8y77p1T/IRQ4D1Hw==}
     engines: {node: '>=4'}
@@ -952,6 +1019,10 @@ packages:
   clone@1.0.4:
     resolution: {integrity: sha512-JQHZ2QMW6l3aH/j6xCqQThY/9OH4D/9ls34cgkUBiEeocRTU04tHfKPBsUK1PqZCUQM7GiA0IIXJSuXHI64Kbg==}
     engines: {node: '>=0.8'}
+
+  clsx@2.0.0:
+    resolution: {integrity: sha512-rQ1+kcj+ttHG0MKVGBUXwayCCF1oh39BF5COIpRzuCEv8Mwjv0XucrI2ExNTOn9IlLifGClWQcU9BrZORvtw6Q==}
+    engines: {node: '>=6'}
 
   clsx@2.1.1:
     resolution: {integrity: sha512-eYm0QWBtUrBWZWG0d386OGAw16Z995PiOVo2B7bjWSbHedGl5e0ZWaq65kOGgUSNesEIDkB9ISbTg/JK9dhCZA==}
@@ -1978,6 +2049,11 @@ packages:
     resolution: {integrity: sha512-jumlc0BIUrS3qJGgIkWZsyfAM7NCWiBcCDhnd+3NNM5KbBmLTgHVfWBcg6W+rLUsIpzpERPsvwUP7CckAQSOoA==}
     engines: {node: '>=12'}
 
+  lucide-react@0.451.0:
+    resolution: {integrity: sha512-OwQ3uljZLp2cerj8sboy5rnhtGTCl9UCJIhT1J85/yOuGVlEH+xaUPR7tvNdddPvmV5M5VLdr7cQuWE3hzA4jw==}
+    peerDependencies:
+      react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0-rc
+
   make-dir@2.1.0:
     resolution: {integrity: sha512-LS9X+dc8KLxXCb8dni79fLIIUA5VyZoyjSMCwTluaXA0o27cCK0bhXkpgw+sTXVpPy/lSO57ilRixqk0vDmtRA==}
     engines: {node: '>=6'}
@@ -2927,6 +3003,9 @@ packages:
   undici-types@5.26.5:
     resolution: {integrity: sha512-JlCMO+ehdEIKqlFxk6IfVoAUVmgz7cU7zD/h9XZ0qzeosSHmUJVOzSQvvYSYWXkFXC+IfLKSIffhv0sVZup6pA==}
 
+  undici-types@6.19.8:
+    resolution: {integrity: sha512-ve2KP6f/JnbPBFyobGHuerC9g1FYGn/F8n1LWTwNxCEzd6IfqTwUQcNXgEtmmQ6DlRrC1hrSrBnCZPokRrDHjw==}
+
   universalify@0.1.2:
     resolution: {integrity: sha512-rBJeI5CXAlmy1pV+617WB9J63U6XcazHHF2f2dbJix4XzpUF0RS3Zbj0FGIOCAva5P/d/GBOYaACQ1w+0azUkg==}
     engines: {node: '>= 4.0.0'}
@@ -3334,6 +3413,19 @@ snapshots:
       picocolors: 1.0.0
       tslib: 2.6.2
 
+  '@radix-ui/react-compose-refs@1.1.0(@types/react@18.2.61)(react@18.2.0)':
+    dependencies:
+      react: 18.2.0
+    optionalDependencies:
+      '@types/react': 18.2.61
+
+  '@radix-ui/react-slot@1.1.0(@types/react@18.2.61)(react@18.2.0)':
+    dependencies:
+      '@radix-ui/react-compose-refs': 1.1.0(@types/react@18.2.61)(react@18.2.0)
+      react: 18.2.0
+    optionalDependencies:
+      '@types/react': 18.2.61
+
   '@rushstack/eslint-patch@1.5.1': {}
 
   '@swc/counter@0.1.3': {}
@@ -3414,6 +3506,10 @@ snapshots:
   '@types/node@20.11.24':
     dependencies:
       undici-types: 5.26.5
+
+  '@types/node@22.7.5':
+    dependencies:
+      undici-types: 6.19.8
 
   '@types/normalize-package-data@2.4.4': {}
 
@@ -3980,6 +4076,10 @@ snapshots:
 
   ci-info@3.9.0: {}
 
+  class-variance-authority@0.7.0:
+    dependencies:
+      clsx: 2.0.0
+
   clean-regexp@1.0.0:
     dependencies:
       escape-string-regexp: 1.0.5
@@ -3997,6 +4097,8 @@ snapshots:
   client-only@0.0.1: {}
 
   clone@1.0.4: {}
+
+  clsx@2.0.0: {}
 
   clsx@2.1.1: {}
 
@@ -5229,6 +5331,14 @@ snapshots:
 
   lru-cache@7.18.3: {}
 
+  lucide-react@0.451.0(react@18.2.0):
+    dependencies:
+      react: 18.2.0
+
+  lucide-react@0.451.0(react@18.3.1):
+    dependencies:
+      react: 18.3.1
+
   make-dir@2.1.0:
     dependencies:
       pify: 4.0.1
@@ -5586,6 +5696,14 @@ snapshots:
     optionalDependencies:
       postcss: 8.4.31
       ts-node: 10.9.1(@types/node@20.11.24)(typescript@5.6.2)
+
+  postcss-load-config@4.0.2(postcss@8.4.31)(ts-node@10.9.1(@types/node@22.7.5)(typescript@5.6.2)):
+    dependencies:
+      lilconfig: 3.1.2
+      yaml: 2.5.1
+    optionalDependencies:
+      postcss: 8.4.31
+      ts-node: 10.9.1(@types/node@22.7.5)(typescript@5.6.2)
 
   postcss-modules-extract-imports@3.1.0(postcss@8.4.47):
     dependencies:
@@ -6077,6 +6195,33 @@ snapshots:
     transitivePeerDependencies:
       - ts-node
 
+  tailwindcss@3.4.13(ts-node@10.9.1(@types/node@22.7.5)(typescript@5.6.2)):
+    dependencies:
+      '@alloc/quick-lru': 5.2.0
+      arg: 5.0.2
+      chokidar: 3.6.0
+      didyoumean: 1.2.2
+      dlv: 1.1.3
+      fast-glob: 3.3.1
+      glob-parent: 6.0.2
+      is-glob: 4.0.3
+      jiti: 1.21.6
+      lilconfig: 2.1.0
+      micromatch: 4.0.5
+      normalize-path: 3.0.0
+      object-hash: 3.0.0
+      picocolors: 1.0.0
+      postcss: 8.4.31
+      postcss-import: 15.1.0(postcss@8.4.31)
+      postcss-js: 4.0.1(postcss@8.4.31)
+      postcss-load-config: 4.0.2(postcss@8.4.31)(ts-node@10.9.1(@types/node@22.7.5)(typescript@5.6.2))
+      postcss-nested: 6.2.0(postcss@8.4.31)
+      postcss-selector-parser: 6.1.2
+      resolve: 1.22.8
+      sucrase: 3.35.0
+    transitivePeerDependencies:
+      - ts-node
+
   tapable@2.2.1: {}
 
   text-table@0.2.0: {}
@@ -6138,6 +6283,25 @@ snapshots:
       typescript: 5.6.2
       v8-compile-cache-lib: 3.0.1
       yn: 3.1.1
+
+  ts-node@10.9.1(@types/node@22.7.5)(typescript@5.6.2):
+    dependencies:
+      '@cspotcode/source-map-support': 0.8.1
+      '@tsconfig/node10': 1.0.9
+      '@tsconfig/node12': 1.0.11
+      '@tsconfig/node14': 1.0.3
+      '@tsconfig/node16': 1.0.4
+      '@types/node': 22.7.5
+      acorn: 8.10.0
+      acorn-walk: 8.2.0
+      arg: 4.1.3
+      create-require: 1.1.1
+      diff: 4.0.2
+      make-error: 1.3.6
+      typescript: 5.6.2
+      v8-compile-cache-lib: 3.0.1
+      yn: 3.1.1
+    optional: true
 
   tsconfig-paths@3.14.2:
     dependencies:
@@ -6263,6 +6427,8 @@ snapshots:
       which-boxed-primitive: 1.0.2
 
   undici-types@5.26.5: {}
+
+  undici-types@6.19.8: {}
 
   universalify@0.1.2: {}
 
