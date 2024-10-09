@@ -4,12 +4,12 @@
   "private": true,
   "exports": {
     "./styles.css": "./dist/index.css",
+    "./shell/shell": "./src/shell/shell.tsx",
     "./shell/action-bar": "./src/shell/action-bar.tsx",
     "./shell/header-bar": "./src/shell/header-bar.tsx",
     "./shell/main": "./src/shell/main.tsx",
     "./button": "./src/button.tsx",
-    "./card": "./src/card.tsx",
-    "./code": "./src/code.tsx"
+    "./lib/utils": "./src/lib/utils.ts"
   },
   "scripts": {
     "build": "tailwindcss -i ./src/styles.css -o ./dist/index.css",
@@ -35,7 +35,11 @@
     "typescript-plugin-css-modules": "^5.1.0"
   },
   "dependencies": {
+    "@radix-ui/react-slot": "^1.1.0",
+    "@repo/core": "workspace:*",
+    "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
+    "lucide-react": "^0.451.0",
     "react": "^18.2.0",
     "tailwind-merge": "^2.5.3"
   }
