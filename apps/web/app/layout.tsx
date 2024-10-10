@@ -6,8 +6,9 @@ import "./globals.css";
 import "@repo/ui/styles.css";
 import { Shell } from "@repo/ui/shell/shell";
 import { ActionBar } from "@repo/ui/shell/action-bar";
-import { HeaderBar } from "@repo/ui/shell/header-bar";
+// import { HeaderBar } from "@repo/ui/shell/header-bar";
 import { Main } from "@repo/ui/shell/main";
+import { Toolbar } from "@repo/ui/toolbar";
 
 const geistSans = localFont({
   src: "./_fonts/GeistVF.woff",
@@ -28,7 +29,8 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Shell>
-          <HeaderBar>Header</HeaderBar>
+          {/* <HeaderBar>Header</HeaderBar> */}
+          <Toolbar/>
           <ActionBar onNavigate={(path) => router.push(path)}></ActionBar>
           <Main>{children}</Main>
         </Shell>
