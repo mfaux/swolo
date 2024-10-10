@@ -50,16 +50,10 @@ The `pnpm dev:` scripts are used to start the development process for a workspac
 
 #### Examples
 
-1. To run the Swolo website:
+To run the Swolo website:
 
 ```bash
 pnpm dev:web
-```
-
-2. To run the documentation:
-
-```bash
-pnpm dev:docs
 ```
 
 ### Managing dependencies
