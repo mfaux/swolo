@@ -9,7 +9,6 @@ import {
   NotebookText,
   ClipboardCheck,
 } from "lucide-react";
-import { cn } from "@repo/ui/lib/utils";
 import { Button } from "@repo/ui/button";
 
 export type ActionBarItem = {

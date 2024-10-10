@@ -18,7 +18,8 @@ This repository is structured as follows:
 | Path                          | Description                                                                          |
 | ----------------------------- | ------------------------------------------------------------------------------------ |
 | `apps/web`                    | The Next.js application for the Swolo website                                        |
-| `packages/ui`                 | A stub React component library shared by the applications                            |
+| `packages/core`               | Core functionality, such as routes, shared by the applications                       |
+| `packages/ui`                 | A React component library shared by the applications                                 |
 | `packages/eslint-config`      | `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`) |
 | `packages/tailwind-config`    | `tailwind.config` for importing into presets of local `tailwind.config.ts` files     |
 | `packages/typescript-config ` | `tsconfig.json`s used throughout the monorepo                                        |
