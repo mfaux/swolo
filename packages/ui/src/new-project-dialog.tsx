@@ -1,6 +1,6 @@
 'use client'
 
-import { ArrowUp, ClipboardCheck } from 'lucide-react';
+import { ArrowUp, FolderKanban } from 'lucide-react';
 import { Button } from "@repo/ui/button";
 import { Input } from "@repo/ui/input";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@repo/ui/dialog"
@@ -12,29 +12,27 @@ import {
   SelectValue,
 } from "@repo/ui/select"
 
-
-type NewTaskDialogProps = {
+type NewProjectDialogProps = {
   onOpenChange: () => void;
 }
-
-const NewTaskDialog = ({onOpenChange}:NewTaskDialogProps) => {  
+const NewProjectDialog = ({onOpenChange}:NewProjectDialogProps) => {
   return (
-    <Dialog open onOpenChange={onOpenChange}>      
+    <Dialog open onOpenChange={onOpenChange} >
       <DialogContent className="sm:max-w-[725px]">
         <DialogHeader>
           <DialogTitle className='flex flex-row items-center gap-1'>
-            <ClipboardCheck />
-            New Task
+            <FolderKanban  />
+            New Project
           </DialogTitle>
         </DialogHeader>
         <div className="pt-1 flex items-center space-x-2 gap-1">
-          <Input autoFocus className="flex-grow" />
+          <Input autoFocus className="flex-grow"  />
           <Select>
             <SelectTrigger className="w-[180px]">
-              <SelectValue placeholder="(No project)" />
+              <SelectValue placeholder="(No parent)" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="all">(No project)</SelectItem>
+              <SelectItem value="all">No parent</SelectItem>
               <SelectItem value="documents">Documents</SelectItem>
               <SelectItem value="images">Images</SelectItem>
             </SelectContent>
@@ -46,4 +44,4 @@ const NewTaskDialog = ({onOpenChange}:NewTaskDialogProps) => {
   )
 }
 
-export { NewTaskDialog };
+export { NewProjectDialog };
