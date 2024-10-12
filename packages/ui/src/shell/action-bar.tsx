@@ -64,7 +64,7 @@ export const ActionBar = ({ onNavigate }: ActionBarProps) => {
   return (
     <div
       className={
-        "[grid-area:actionbar] ui-w-max ui-flex ui-flex-col ui-h-full ui-bg-gray-200"
+        "[grid-area:actionbar] w-max flex flex-col h-full bg-gray-200"
       }
     >
       {buttons}

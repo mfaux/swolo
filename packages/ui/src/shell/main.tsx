@@ -6,7 +6,7 @@ type HeaderBarProps = PropsWithChildren<{}>;
 
 export const Main = ({ children }: HeaderBarProps) => {
   return (
-    <div className="[grid-area:main] ui-grid ui-place-content-center">
+    <div className="[grid-area:main] grid place-content-center">
       {children}
     </div>
   );
