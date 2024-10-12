@@ -8,9 +8,7 @@ import { Shell } from "@repo/ui/shell/shell";
 import { ActionBar } from "@repo/ui/shell/action-bar";
 // import { HeaderBar } from "@repo/ui/shell/header-bar";
 import { Main } from "@repo/ui/shell/main";
-import {NewTaskDialog} from "@repo/ui/new-task-dialog";
 import { Toolbar } from "@repo/ui/toolbar";
-import { useState } from "react";
 
 const geistSans = localFont({
   src: "./_fonts/GeistVF.woff",
