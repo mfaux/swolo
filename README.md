@@ -2,7 +2,7 @@
 
 Inspired by the
 [Getting Things Done](https://en.wikipedia.org/wiki/Getting_Things_Done)
-methodology and Ben Solo's iconic shirtless scene, Swolo is a cross-platform
+methodology and Ben Solo's iconic shirtless scene, Swolo is a
 **project management and note-taking app** designed for a party of one.
 
 Capture tasks, manage projects, and take notes with confidence — just like Ben,
@@ -12,10 +12,12 @@ you're swol enough to handle anything your workload throws at you.
 
 ## Guiding principles
 
-- **Effortless capture** — Quickly capture tasks and ideas, clearing your mind of distractions for later processing.
-- **Work anywhere** — Access your content seamlessly from the web or desktop, whether you're online or offline.
-- **Frictionless task setup** — Start tasks from anywhere, even while taking notes, to keep your workflow smooth.
-- **Label all the things** — Tag your tasks and notes for easy searching and organization.
+- **Effortless capture** — Quickly capture tasks and ideas, clearing your mind
+  of distractions for later processing.
+- **Frictionless task setup** — Start tasks from anywhere, even while taking
+  notes, to keep your workflow smooth.
+- **Label all the things** — Tag your tasks and notes for easy searching and
+  organization.
 - **Full data control** — Export your data at anytime.
 
 ## Contributing
@@ -40,4 +42,4 @@ Licensed under the [MIT license](https://github.com/shadcn/ui/blob/main/LICENSE.
 
 <br/>
 
-![Ben Swolo meme](./img/do-you-even.png)
+![Ben Swolo meme](./docs/img/do-you-even.png)
