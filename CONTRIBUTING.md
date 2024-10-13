@@ -3,38 +3,6 @@
 Thank you for considering contributing to Swolo! This document outlines the
 process for contributing to this project.
 
-## Development
-
-### Clone on your local machine
-
-```bash
-git clone https://github.com/mfaux/swolo.git
-```
-
-### Create a new Branch
-
-```bash
-git checkout -b my-new-branch
-```
-
-### Install dependencies
-
-```bash
-pnpm install
-```
-
-### Run a workspace
-
-The `pnpm dev:` scripts are used to start the development process for a workspace.
-
-#### Examples
-
-To run the Swolo website:
-
-```bash
-pnpm dev
-```
-
 ## Commit convention
 
 [Conventional commits](https://www.conventionalcommits.org/) are used in this
