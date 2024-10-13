@@ -3,27 +3,6 @@
 Thank you for considering contributing to Swolo! This document outlines the
 process for contributing to this project.
 
-## About this repository
-
-This repository is a monorepo.
-
-- [pnpm](https://pnpm.io) and [`workspaces`](https://pnpm.io/workspaces) are used for development.
-- [Turborepo](https://turbo.build/repo) is the build system, with `@repo` for internal packages.
-- (_planned_) [changesets](https://github.com/changesets/changesets) will be used for managing releases.
-
-## Structure
-
-This repository is structured as follows:
-
-| Path                          | Description                                                                          |
-| ----------------------------- | ------------------------------------------------------------------------------------ |
-| `apps/web`                    | The Next.js application for the Swolo website                                        |
-| `packages/core`               | Core functionality, such as routes, shared by the applications                       |
-| `packages/ui`                 | A React component library shared by the applications                                 |
-| `packages/eslint-config`      | `eslint` configurations (includes `eslint-config-next` and `eslint-config-prettier`) |
-| `packages/tailwind-config`    | `tailwind.config` for importing into presets of local `tailwind.config.ts` files     |
-| `packages/typescript-config ` | `tsconfig.json`s used throughout the monorepo                                        |
-
 ## Development
 
 ### Clone on your local machine
@@ -53,22 +32,7 @@ The `pnpm dev:` scripts are used to start the development process for a workspac
 To run the Swolo website:
 
 ```bash
-pnpm dev:web
-```
-
-### Managing dependencies
-
-When adding dependencies, follow Turbo's [Best practices for dependency installation](https://turbo.build/repo/docs/crafting-your-repository/managing-dependencies#best-practices-for-dependency-installation):
-
-> Install dependencies where they're used. When you install a dependency in your repository, you should install it directly in the package that uses it. The package's package.json will have every dependency that the package needs. This is true for both external and internal dependencies.
-
-### Versioning dependencies
-
-As a rule, keep dependencies on the same version across all packages. Use
-`pnpm up` to update dependency versions in one command. For example:
-
-```bash
-pnpm up --recursive typescript@latest
+pnpm dev
 ```
 
 ## Commit convention
