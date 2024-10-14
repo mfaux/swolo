@@ -20,6 +20,50 @@ you're swol enough to handle anything your workload throws at you.
   organization.
 - **Full data control** — Export your data at anytime.
 
+## Tech Stack
+
+- **Framework**: [Next.js](https://nextjs.org/)
+- **Database**: [Postgres](https://www.postgresql.org/)
+- **ORM**: [Drizzle](https://orm.drizzle.team/)
+- **UI Library**: [shadcn/ui](https://ui.shadcn.com/)
+
+## Getting Started
+
+```bash
+git clone https://github.com/mfaux/swolo
+cd swolo
+pnpm install
+```
+
+## Running Locally
+
+Create an .env file with the following:
+
+```bash
+POSTGRES_URL=postgres://root:secret@localhost:5432/postgres
+```
+
+Start the Postgres database with Docker Compose:
+
+```bash
+docker compose up -d
+```
+
+Feel free to change the database settings in the `.env` and `docker-compose.yaml` files to your liking.
+
+Then, run the database migrations and seed the database with emails and folders:
+
+```bash
+pnpm db:migrate
+pnpm db:seed
+```
+
+Finally, run the Next.js development server:
+
+```bash
+pnpm dev
+```
+
 ## Contributing
 
 Please read the [contributing guide](/CONTRIBUTING.md).
