@@ -1,6 +1,7 @@
 'use client';
 
 import { ActionBar } from '@/components/ui/shell/action-bar';
+import { HeaderBar } from '@/components/ui/shell/header-bar';
 import { Main } from '@/components/ui/shell/main';
 import { Shell } from '@/components/ui/shell/shell';
 import { Toolbar } from '@/components/ui/toolbar';
@@ -28,7 +29,9 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <Shell>
-          <Toolbar />
+          <HeaderBar>
+            <Toolbar />
+          </HeaderBar>
           <ActionBar onNavigate={(path) => router.push(path)}></ActionBar>
           <Main>{children}</Main>
         </Shell>

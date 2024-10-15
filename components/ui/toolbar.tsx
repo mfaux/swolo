@@ -19,7 +19,7 @@ const Toolbar = () => {
   const [showNewTask, setShowNewTask] = useState(false);
 
   return (
-    <div className="absolute left-1/2 transform -translate-x-1/2 top-3 flex flex-row items-center">
+    <div className="flex flex-row justify-center items-center">
       <Button
         variant={'outline'}
         aria-label="New Task"
