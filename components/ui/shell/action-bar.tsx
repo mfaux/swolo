@@ -1,4 +1,3 @@
-'use client';
 import { Button } from '@/components/ui/button';
 import { Route } from '@/lib/routes';
 import {
@@ -63,7 +62,9 @@ export const ActionBar = ({ onNavigate }: ActionBarProps) => {
 
   return (
     <div
-      className={'[grid-area:actionbar] w-max flex flex-col h-full bg-gray-200'}
+      className={
+        '[grid-area:actionbar] w-max flex flex-col h-full border-r shadow-md'
+      }
     >
       {buttons}
     </div>
@@ -96,8 +97,14 @@ export const ActionBarButton = ({
   onClick,
 }: ActionBarButtonProps) => {
   return (
-    <Button variant="ghost" size="icon" onClick={onClick} aria-label={label}>
-      <Icon className="h-5 w-5" />
+    <Button
+      variant="ghost"
+      size="default"
+      onClick={onClick}
+      aria-label={label}
+      className="h-12 w-12"
+    >
+      <Icon className="h-6 w-6" />
     </Button>
   );
 };

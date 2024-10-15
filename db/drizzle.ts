@@ -6,6 +6,7 @@ import * as schema from './schema';
 dotenv.config();
 
 require('dotenv').config({ path: `.env.${process.env.NODE_ENV}` });
+
 if (!process.env.POSTGRES_URL) {
   throw new Error('POSTGRES_URL environment variable is not set');
 }

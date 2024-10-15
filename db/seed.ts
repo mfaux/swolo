@@ -27,11 +27,11 @@ async function seedUsers() {
 async function seedProjects() {
   await db.insert(projects).values([
     {
-      id: 'my-project',
-      name: 'My Project',
-      description: 'This is a project',
+      id: 'swolo',
+      name: 'Project management app',
+      description: 'Project management and note-taking app wit GTD principles.',
       userId: 'fox',
-      key: 'my-project',
+      key: 'swolo',
     },
   ]);
 }
@@ -40,12 +40,57 @@ async function seedTasks() {
   await db.insert(tasks).values([
     {
       id: createId(),
-      title: 'My Task',
-      description: 'This is a task',
+      title: 'Implement synching',
+      description: 'Sync data from the cloud to the local desktop.',
       status: 'todo',
       userId: 'fox',
-      projectId: 'my-project',
+      projectId: 'swolo',
       key: 'my-task',
+    },
+    {
+      id: createId(),
+      title: 'Design app layout',
+      description: 'Create wireframes and mockups for the app.',
+      status: 'in-progress',
+      userId: 'fox',
+      projectId: 'swolo',
+      key: 'design-layout',
+    },
+    {
+      id: createId(),
+      title: 'Develop authentication module',
+      description: 'Implement user login and registration functionality.',
+      status: 'todo',
+      userId: 'fox',
+      projectId: 'swolo',
+      key: 'auth-module',
+    },
+    {
+      id: createId(),
+      title: 'Set up database',
+      description: 'Configure the database schema and connections.',
+      status: 'todo',
+      userId: 'fox',
+      projectId: 'swolo',
+      key: 'setup-database',
+    },
+    {
+      id: createId(),
+      title: 'Create API endpoints',
+      description: 'Develop RESTful API endpoints for the app.',
+      status: 'todo',
+      userId: 'fox',
+      projectId: 'swolo',
+      key: 'create-api',
+    },
+    {
+      id: createId(),
+      title: 'Implement frontend',
+      description: 'Build the frontend using React.',
+      status: 'todo',
+      userId: 'fox',
+      projectId: 'swolo',
+      key: 'implement-frontend',
     },
   ]);
 }
