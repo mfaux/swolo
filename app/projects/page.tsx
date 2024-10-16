@@ -1,7 +1,9 @@
-import { getAllProjects } from '@/db/queries';
+import { getProjects } from '@/db/queries';
 import Projects from './_components/projects';
 
 export default async function ProjectsPage() {
-  const projects = await getAllProjects('fox', 50, 0);
+  const projects = await getProjects({
+    userId: 'fox',
+  });
   return <Projects projects={projects} />;
 }
