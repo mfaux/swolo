@@ -1,3 +1,5 @@
+'use client';
+
 import { Button } from '@/components/ui/button';
 import { Route } from '@/lib/routes';
 import {
@@ -9,6 +11,7 @@ import {
   NotebookText,
   Settings,
 } from 'lucide-react';
+import { useRouter } from 'next/navigation';
 
 export type ActionBarItem = {
   route: Route;
@@ -52,13 +55,13 @@ const getActionBarItems = (): ActionBarItem[] => {
   return items;
 };
 
-export type ActionBarProps = {
-  onNavigate: (path: string) => void;
-};
-
-export const ActionBar = ({ onNavigate }: ActionBarProps) => {
+export const ActionBar = () => {
+  const router = useRouter();
   const items = getActionBarItems();
-  const buttons = getActionBarButtons(items, onNavigate);
+  const handleNavigate = (path: string) => {
+    router.push(path);
+  };
+  const buttons = getActionBarButtons(items, handleNavigate);
 
   return (
     <div

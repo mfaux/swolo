@@ -16,14 +16,22 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { Project } from '@/db/types';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import { ArrowUp, ClipboardCheck } from 'lucide-react';
 
 type NewTaskDialogProps = {
   onOpenChange: () => void;
+  projects: Project[];
 };
 
-const NewTaskDialog = ({ onOpenChange }: NewTaskDialogProps) => {
+const NewTaskDialog = ({ projects, onOpenChange }: NewTaskDialogProps) => {
+  const projectItems = projects.map((project) => (
+    <SelectItem key={project.id} value={project.id}>
+      {project.name}
+    </SelectItem>
+  ));
+
   return (
     <Dialog open onOpenChange={onOpenChange}>
       <VisuallyHidden.Root>
@@ -37,15 +45,14 @@ const NewTaskDialog = ({ onOpenChange }: NewTaskDialogProps) => {
           </DialogTitle>
         </DialogHeader>
         <div className="pt-1 flex items-center space-x-2 gap-1">
-          <Input autoFocus className="flex-grow" />
+          <Input autoFocus className="grow" />
           <Select>
             <SelectTrigger className="w-[180px]">
               <SelectValue placeholder="(No project)" />
             </SelectTrigger>
             <SelectContent>
               <SelectItem value="all">(No project)</SelectItem>
-              <SelectItem value="documents">Documents</SelectItem>
-              <SelectItem value="images">Images</SelectItem>
+              {projectItems}
             </SelectContent>
           </Select>
           <Button type="submit">

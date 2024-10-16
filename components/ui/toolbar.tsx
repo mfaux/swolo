@@ -11,11 +11,16 @@ import {
 } from './menubar';
 import { NewTaskDialog } from './new-task-dialog';
 
+import { Project } from '@/db/types';
 import { useState } from 'react';
 import { Button } from './button';
 import { NewProjectDialog } from './new-project-dialog';
 
-const Toolbar = () => {
+type ToolbarProps = {
+  projects: Project[];
+};
+
+const Toolbar = ({ projects }: ToolbarProps) => {
   const [showNewTask, setShowNewTask] = useState(false);
 
   return (
@@ -28,11 +33,11 @@ const Toolbar = () => {
         <Plus />
       </Button>
 
-      <NewItemMenu />
+      <NewItemMenu projects={projects} />
 
       <div className="flex items-center bg-gray-100 rounded-full p-1 w-fit">
         <div className="mx-2 relative">
-          <Search className="h-4 w-4 absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-400" />
+          <Search className="h-4 w-4 absolute right-2 top-1/2 -translate-y-1/2 text-gray-400" />
           <Input
             className="pr-8 h-8 w-40 bg-transparent border-none focus-visible:ring-0 focus-visible:ring-offset-0"
             type="text"
@@ -41,13 +46,20 @@ const Toolbar = () => {
       </div>
 
       {showNewTask && (
-        <NewTaskDialog onOpenChange={() => setShowNewTask(false)} />
+        <NewTaskDialog
+          projects={projects}
+          onOpenChange={() => setShowNewTask(false)}
+        />
       )}
     </div>
   );
 };
 
-const NewItemMenu = () => {
+type NewItemMenuProps = {
+  projects: Project[];
+};
+
+const NewItemMenu = ({ projects }: NewItemMenuProps) => {
   const [showNewProject, setShowNewProject] = useState(false);
   const [showNewTask, setShowNewTask] = useState(false);
 
@@ -67,10 +79,16 @@ const NewItemMenu = () => {
         </MenubarContent>
       </MenubarMenu>
       {showNewProject && (
-        <NewProjectDialog onOpenChange={() => setShowNewProject(false)} />
+        <NewProjectDialog
+          projects={projects}
+          onOpenChange={() => setShowNewProject(false)}
+        />
       )}
       {showNewTask && (
-        <NewTaskDialog onOpenChange={() => setShowNewTask(false)} />
+        <NewTaskDialog
+          projects={projects}
+          onOpenChange={() => setShowNewTask(false)}
+        />
       )}
     </Menubar>
   );
