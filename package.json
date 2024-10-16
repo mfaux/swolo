@@ -22,6 +22,7 @@
     "@radix-ui/react-select": "^2.1.2",
     "@radix-ui/react-slot": "^1.1.0",
     "@radix-ui/react-visually-hidden": "^1.1.0",
+    "@strozw/use-action-state-compat": "^0.1.10",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "drizzle-orm": "^0.34.1",
@@ -32,7 +33,8 @@
     "prettier-plugin-organize-imports": "^4.1.0",
     "react": "^18",
     "react-dom": "^18",
-    "tailwind-merge": "^2.5.3"
+    "tailwind-merge": "^2.5.3",
+    "zod": "^3.23.8"
   },
   "devDependencies": {
     "@types/node": "^20",
