@@ -1,20 +1,20 @@
 'use client';
 
+import { NewTaskDialog } from '@/app/_components/new-task-dialog';
 import { Input } from '@/components/ui/input';
-import { ChevronDown, Plus, Search } from 'lucide-react';
 import {
   Menubar,
   MenubarContent,
   MenubarItem,
   MenubarMenu,
   MenubarTrigger,
-} from './menubar';
-import { NewTaskDialog } from './new-task-dialog';
+} from '@/components/ui/menubar';
+import { ChevronDown, Plus, Search } from 'lucide-react';
 
+import { NewProjectDialog } from '@/app/_components/new-project-dialog';
+import { Button } from '@/components/ui/button';
 import { Project } from '@/db/types';
 import { useState } from 'react';
-import { Button } from './button';
-import { NewProjectDialog } from './new-project-dialog';
 
 type ToolbarProps = {
   projects: Project[];
