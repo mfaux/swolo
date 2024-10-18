@@ -5,7 +5,7 @@ export type Task = typeof tasks.$inferSelect;
 export type Label = typeof labels.$inferSelect;
 
 export type ProjectWithLabels = {
-  id: number;
+  id: string;
   name: string;
   key: string;
   description?: string;

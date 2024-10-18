@@ -17,24 +17,25 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { SubmitButton } from '@/components/ui/submit-button';
-import { Project } from '@/db/types';
+import { ProjectWithLabels } from '@/db/types';
 import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import { useActionStateCompat } from '@strozw/use-action-state-compat';
 import { FolderKanban } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { createProject } from './actions';
 
 type NewProjectDialogProps = {
+  projects: ProjectWithLabels[];
+  isOpen: boolean;
   onOpenChange: () => void;
-  projects: Project[];
 };
 
 const NewProjectDialog = ({
   projects,
+  isOpen,
   onOpenChange,
 }: NewProjectDialogProps) => {
-  const [open, setOpen] = useState(true);
   const [state, formAction, isPending] = useActionStateCompat(
     createProject,
     null,
@@ -42,9 +43,9 @@ const NewProjectDialog = ({
 
   useEffect(() => {
     if (state?.success) {
-      setOpen(false);
+      onOpenChange();
     }
-  }, [state]);
+  }, [state, onOpenChange]);
 
   const projectItems = projects.map((project) => (
     <SelectItem key={project.id} value={project.id}>
@@ -53,7 +54,7 @@ const NewProjectDialog = ({
   ));
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog open={isOpen} onOpenChange={onOpenChange}>
       <VisuallyHidden.Root>
         <DialogDescription>Dialog for adding a new project</DialogDescription>
       </VisuallyHidden.Root>
