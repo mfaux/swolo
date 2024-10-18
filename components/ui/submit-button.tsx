@@ -3,9 +3,11 @@
 import { ArrowUp } from 'lucide-react';
 import { Button, ButtonProps } from './button';
 
-const SubmitButton = (props: ButtonProps & { isPending: boolean }) => {
+type SubmitButtonProps = ButtonProps & { isPending: boolean };
+
+const SubmitButton = ({ isPending, ...rest }: SubmitButtonProps) => {
   return (
-    <Button type="submit" aria-disabled={props.isPending} {...props}>
+    <Button type="submit" aria-disabled={isPending} {...rest}>
       <ArrowUp />
     </Button>
   );

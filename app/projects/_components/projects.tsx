@@ -13,6 +13,7 @@ import { Label } from '@/components/ui/label';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { ProjectWithLabels } from '@/db/types';
 import { MoreHorizontal, Trash2 } from 'lucide-react';
+import { deleteProject } from '../actions';
 
 type ProjectsProps = {
   projects: ProjectWithLabels[];
@@ -25,7 +26,7 @@ export default function Projects({ projects }: ProjectsProps) {
 
       <div className="flex flex-col gap-4 p-4">
         {projects.map((item) => (
-          <ProjectCard key={item.key} project={item} />
+          <ProjectCard key={item.id} project={item} />
         ))}
       </div>
     </ScrollArea>
@@ -38,7 +39,7 @@ type ProjectCardProps = {
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
   const onDelete = () => {
-    console.log('delete');
+    deleteProject(project.id);
   };
 
   return (
@@ -74,9 +75,11 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         </div>
       </CardHeader>
       <CardContent>
-        <p className="text-muted-foreground mb-4 line-clamp-3">
-          {project.description?.substring(0, 300)}
-        </p>
+        {project.description && (
+          <p className="text-muted-foreground mb-4 line-clamp-3">
+            {project.description?.substring(0, 300)}
+          </p>
+        )}
         {project.labels?.length > 0 && (
           <div className="flex flex-wrap gap-2">
             {project.labels.map((label, index) => (

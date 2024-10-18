@@ -16,13 +16,13 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-import { Project } from '@/db/types';
+import { ProjectWithLabels } from '@/db/types';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import { ArrowUp, ClipboardCheck } from 'lucide-react';
 
 type NewTaskDialogProps = {
   onOpenChange: () => void;
-  projects: Project[];
+  projects: ProjectWithLabels[];
 };
 
 const NewTaskDialog = ({ projects, onOpenChange }: NewTaskDialogProps) => {

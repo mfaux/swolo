@@ -13,11 +13,11 @@ import { ChevronDown, Plus, Search } from 'lucide-react';
 
 import { NewProjectDialog } from '@/app/_components/new-project-dialog';
 import { Button } from '@/components/ui/button';
-import { Project } from '@/db/types';
+import { ProjectWithLabels } from '@/db/types';
 import { useState } from 'react';
 
 type ToolbarProps = {
-  projects: ProjectWithLabelsh[];
+  projects: ProjectWithLabels[];
 };
 
 const Toolbar = ({ projects }: ToolbarProps) => {
@@ -56,7 +56,7 @@ const Toolbar = ({ projects }: ToolbarProps) => {
 };
 
 type NewItemMenuProps = {
-  projects: Project[];
+  projects: ProjectWithLabels[];
 };
 
 const NewItemMenu = ({ projects }: NewItemMenuProps) => {
@@ -78,12 +78,11 @@ const NewItemMenu = ({ projects }: NewItemMenuProps) => {
           </MenubarItem>
         </MenubarContent>
       </MenubarMenu>
-      {showNewProject && (
-        <NewProjectDialog
-          projects={projects}
-          onOpenChange={() => setShowNewProject(false)}
-        />
-      )}
+      <NewProjectDialog
+        projects={projects}
+        isOpen={showNewProject}
+        onOpenChange={() => setShowNewProject(false)}
+      />
       {showNewTask && (
         <NewTaskDialog
           projects={projects}
