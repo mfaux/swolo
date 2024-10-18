@@ -1,49 +1,92 @@
 'use client';
 
+import { Badge } from '@/components/ui/badge';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import { Label } from '@/components/ui/label';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Project } from '@/db/types';
-import { cn } from '@/lib/utils';
-import { useState } from 'react';
+import { ProjectWithLabels } from '@/db/types';
+import { MoreHorizontal, Trash2 } from 'lucide-react';
 
 type ProjectsProps = {
-  projects: Project[];
+  projects: ProjectWithLabels[];
 };
 
 export default function Projects({ projects }: ProjectsProps) {
-  const [task, setTask] = useState({ selected: '' });
   return (
     <ScrollArea className="h-screen">
       <Label>Projects</Label>
 
       <div className="flex flex-col gap-4 p-4">
         {projects.map((item) => (
-          <button
-            key={item.id}
-            className={cn(
-              'flex flex-col items-start gap-3 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent max-w-96 shadow-sm',
-              task.selected === item.id && 'bg-muted',
-            )}
-            onClick={() =>
-              setTask({
-                ...task,
-                selected: item.id,
-              })
-            }
-          >
-            <div className="flex w-full flex-col gap-1">
-              <div className="flex items-center">
-                <div className="flex items-center gap-2">
-                  <div className="font-semibold">{item.name}</div>
-                </div>
-              </div>
-            </div>
-            <div className="line-clamp-2 text-xs text-muted-foreground">
-              {item.description?.substring(0, 300)}
-            </div>
-          </button>
+          <ProjectCard key={item.key} project={item} />
         ))}
       </div>
     </ScrollArea>
   );
 }
+
+type ProjectCardProps = {
+  project: ProjectWithLabels;
+};
+
+const ProjectCard = ({ project }: ProjectCardProps) => {
+  const onDelete = () => {
+    console.log('delete');
+  };
+
+  return (
+    <Card className="w-full max-w-md transition-shadow hover:shadow-md relative ">
+      <CardHeader className="pl-6 pt-6 pb-3">
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-2">
+            <CardTitle className="text-lg font-bold">{project.name}</CardTitle>
+            {project.key && (
+              <div className="text-xs pl-1 uppercase font-bold  text-gray-500 ">
+                {project.key}
+              </div>
+            )}
+          </div>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute right-4 top-4"
+              >
+                <MoreHorizontal className="h-4 w-4" />
+                <span className="sr-only">Open menu</span>
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={onDelete}>
+                <Trash2 className="mr-2 h-4 w-4" />
+                <span>Delete</span>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
+      </CardHeader>
+      <CardContent>
+        <p className="text-muted-foreground mb-4 line-clamp-3">
+          {project.description?.substring(0, 300)}
+        </p>
+        {project.labels?.length > 0 && (
+          <div className="flex flex-wrap gap-2">
+            {project.labels.map((label, index) => (
+              <Badge key={index} variant="secondary">
+                {label.name}
+              </Badge>
+            ))}
+          </div>
+        )}
+      </CardContent>
+    </Card>
+  );
+};

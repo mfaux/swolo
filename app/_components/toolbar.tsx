@@ -17,7 +17,7 @@ import { Project } from '@/db/types';
 import { useState } from 'react';
 
 type ToolbarProps = {
-  projects: Project[];
+  projects: ProjectWithLabelsh[];
 };
 
 const Toolbar = ({ projects }: ToolbarProps) => {
