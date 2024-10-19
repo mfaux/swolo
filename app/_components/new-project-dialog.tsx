@@ -1,6 +1,5 @@
 'use client';
 
-import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
 import {
   Dialog,
   DialogContent,
@@ -18,11 +17,9 @@ import {
 } from '@/components/ui/select';
 import { SubmitButton } from '@/components/ui/submit-button';
 import { ProjectWithLabels } from '@/db/types';
-import { ExclamationTriangleIcon } from '@radix-ui/react-icons';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
-import { useActionStateCompat } from '@strozw/use-action-state-compat';
 import { FolderKanban } from 'lucide-react';
-import { useEffect } from 'react';
+import { useFormStatus } from 'react-dom';
 import { createProject } from './actions';
 
 type NewProjectDialogProps = {
@@ -36,16 +33,17 @@ const NewProjectDialog = ({
   isOpen,
   onOpenChange,
 }: NewProjectDialogProps) => {
-  const [state, formAction, isPending] = useActionStateCompat(
-    createProject,
-    null,
-  );
+  const status = useFormStatus();
 
-  useEffect(() => {
-    if (state?.success) {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const form = event.currentTarget as HTMLFormElement;
+    const formData = new FormData(form);
+    const res = await createProject(formData);
+    if (res.success) {
       onOpenChange();
     }
-  }, [state, onOpenChange]);
+  };
 
   const projectItems = projects.map((project) => (
     <SelectItem key={project.id} value={project.id}>
@@ -65,16 +63,7 @@ const NewProjectDialog = ({
             New Project
           </DialogTitle>
         </DialogHeader>
-        {state?.error && (
-          <div className="mb-4">
-            <Alert variant="destructive" className="relative">
-              <ExclamationTriangleIcon className="h-4 w-4" />
-              <AlertTitle>Error</AlertTitle>
-              <AlertDescription>{state.error}</AlertDescription>
-            </Alert>
-          </div>
-        )}
-        <form action={formAction}>
+        <form onSubmit={handleSubmit}>
           <div className="pt-1 flex items-center space-x-2 gap-1">
             <Input name="projectName" required autoFocus className="grow" />
             <Select>
@@ -86,7 +75,7 @@ const NewProjectDialog = ({
                 {projectItems}
               </SelectContent>
             </Select>
-            <SubmitButton isPending={isPending} />
+            <SubmitButton isPending={status.pending} />
           </div>
         </form>
       </DialogContent>

@@ -11,7 +11,7 @@ const schema = z.object({
   }),
 });
 
-export const createProject = async (_: any, formData: FormData) => {
+export const createProject = async (formData: FormData) => {
   let rawFormData = {
     projectName: formData.get('projectName'),
   };
