@@ -1,6 +1,6 @@
 'use server';
 
-import { aliasedTable, and, eq, sql } from 'drizzle-orm';
+import { aliasedTable, eq, sql } from 'drizzle-orm';
 import { db } from './drizzle';
 import { labels, projectLabels, projects, tasks } from './schema';
 import { ProjectWithLabels, Task } from './types';
@@ -72,6 +72,6 @@ export const getProjects = async (
     .leftJoin(labels, eq(projectLabels.labelId, labels.id))
     .limit(limit)
     .offset(offset)
-    .where(and(eq(projects.userId, params.userId)))
+    .where(eq(projects.userId, params.userId))
     .groupBy(projects.id, parentProject.name);
 };
