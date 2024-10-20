@@ -1,7 +1,6 @@
 'use client';
 
 import { Badge } from '@/components/ui/badge';
-import { Label } from '@/components/ui/label';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { TaskWithLabels } from '@/db/types';
 import { cn } from '@/lib/utils';
@@ -15,8 +14,6 @@ export default function Tasks({ tasks }: TasksProps) {
   const [task, setTask] = useState({ selected: '' });
   return (
     <ScrollArea className="h-screen">
-      <Label>Tasks</Label>
-
       <div className="flex flex-col gap-4 p-4">
         {tasks.map((item) => (
           <button

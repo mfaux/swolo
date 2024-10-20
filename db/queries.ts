@@ -1,21 +1,22 @@
 'use server';
 
-import { aliasedTable, eq, sql } from 'drizzle-orm';
+import { aliasedTable, and, eq, sql } from 'drizzle-orm';
 import { db } from './drizzle';
 import { labels, projectLabels, projects, taskLabels, tasks } from './schema';
 import { ProjectWithLabels, TaskWithLabels } from './types';
 
 const parentProject = aliasedTable(projects, 'parent');
 
-type GetTasksParams =
+type GetTasksParams = {
+  userId: string;
+  projectId?: string;
+} & (
+  | {}
   | {
-      userId: string;
-    }
-  | {
-      userId: string;
       limit: number;
       offset: number;
-    };
+    }
+);
 
 // TODO: fix overfetching when showing task cards.
 
@@ -54,19 +55,28 @@ export const getTasks = async (
     .leftJoin(labels, eq(taskLabels.labelId, labels.id))
     .limit(limit)
     .offset(offset)
-    .where(eq(tasks.userId, params.userId))
+    // .where(eq(tasks.userId, params.userId))
+    .where(
+      and(
+        eq(tasks.userId, params.userId),
+        'projectId' in params
+          ? eq(tasks.projectId, params.projectId!)
+          : undefined,
+      ),
+    )
     .groupBy(tasks.id, parentProject.name);
 };
 
-type GetProjectsParams =
+type GetProjectsParams = {
+  userId: string;
+  projectId?: string;
+} & (
+  | {}
   | {
-      userId: string;
-    }
-  | {
-      userId: string;
       limit: number;
       offset: number;
-    };
+    }
+);
 
 // TODO: fix overfetching when showing project cards.
 
@@ -80,7 +90,6 @@ export const getProjects = async (
     limit = params.limit;
     offset = params.offset;
   }
-
   return await db
     .select({
       id: projects.id,
@@ -103,6 +112,11 @@ export const getProjects = async (
     .leftJoin(labels, eq(projectLabels.labelId, labels.id))
     .limit(limit)
     .offset(offset)
-    .where(eq(projects.userId, params.userId))
+    .where(
+      and(
+        eq(projects.userId, params.userId),
+        'projectId' in params ? eq(projects.id, params.projectId!) : undefined,
+      ),
+    )
     .groupBy(projects.id, parentProject.name);
 };
