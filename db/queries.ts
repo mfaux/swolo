@@ -85,7 +85,6 @@ export const getProjects = async (
     .select({
       id: projects.id,
       name: projects.name,
-      key: projects.key,
       createdAt: projects.createdAt,
       updatedAt: projects.updatedAt,
       description: projects.description,

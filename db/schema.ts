@@ -7,7 +7,6 @@ import {
   primaryKey,
   text,
   timestamp,
-  unique,
   varchar,
 } from 'drizzle-orm/pg-core';
 
@@ -32,7 +31,7 @@ export const projects = pgTable(
   {
     id: varchar({ length: cuidLength })
       .$defaultFn(() => createId())
-      .primaryKey(),
+      .notNull(),
     name: text().notNull(),
     description: text(),
     createdAt: timestamp().defaultNow().notNull(),
@@ -41,29 +40,34 @@ export const projects = pgTable(
     userId: varchar({ length: userIdLength })
       .references(() => users.id)
       .notNull(),
-    key: varchar({ length: 20 }).notNull(),
   },
-  (t) => ({
-    unq: unique().on(t.key, t.userId), // ensure unique project keys for the user
+  (table) => ({
+    pk: primaryKey({ columns: [table.id, table.name, table.userId] }),
   }),
 );
 
 // Tasks table
-export const tasks = pgTable('tasks', {
-  id: varchar({ length: cuidLength })
-    .$defaultFn(() => createId())
-    .primaryKey(),
-  title: text().notNull(),
-  description: text(),
-  status: text().notNull().default('todo'),
-  dueDate: timestamp(),
-  createdAt: timestamp().defaultNow().notNull(),
-  updatedAt: timestamp().defaultNow().notNull(),
-  projectId: varchar().references(() => projects.id),
-  userId: varchar({ length: userIdLength })
-    .references(() => users.id)
-    .notNull(),
-});
+export const tasks = pgTable(
+  'tasks',
+  {
+    id: varchar({ length: cuidLength })
+      .$defaultFn(() => createId())
+      .notNull(),
+    title: text().notNull(),
+    description: text(),
+    status: text().notNull().default('todo'),
+    dueDate: timestamp(),
+    createdAt: timestamp().defaultNow().notNull(),
+    updatedAt: timestamp().defaultNow().notNull(),
+    projectId: varchar().references(() => projects.id),
+    userId: varchar({ length: userIdLength })
+      .references(() => users.id)
+      .notNull(),
+  },
+  (table) => ({
+    pk: primaryKey({ columns: [table.id, table.title, table.userId] }),
+  }),
+);
 
 // Labels table
 export const labels = pgTable(

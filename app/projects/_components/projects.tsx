@@ -48,11 +48,6 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
             <CardTitle className="text-lg font-bold">{project.name}</CardTitle>
-            {project.key && (
-              <div className="text-xs pl-1 uppercase font-bold  text-gray-500 ">
-                {project.key}
-              </div>
-            )}
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>

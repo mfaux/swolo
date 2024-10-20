@@ -2,7 +2,6 @@
 
 import { db } from '@/db/drizzle';
 import { projects } from '@/db/schema';
-import { generateUniqueProjectKey } from '@/db/utils';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 
@@ -25,7 +24,6 @@ export const createProject = async (formData: FormData) => {
     });
 
     const { projectName } = validatedFields;
-    const key = await generateUniqueProjectKey(userId, projectName);
 
     // TODO: ensure the user is authorized
     // https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations#authentication-and-authorization
@@ -33,7 +31,6 @@ export const createProject = async (formData: FormData) => {
     await db.insert(projects).values({
       name: projectName,
       userId: userId,
-      key: key,
     });
 
     revalidatePath('/');
