@@ -56,7 +56,6 @@ async function seedProjects() {
       name: 'Project management app',
       description: 'Project management and note-taking app wit GTD principles.',
       userId: 'fox',
-      key: 'swolo',
     },
   ]);
 
