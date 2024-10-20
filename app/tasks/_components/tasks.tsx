@@ -1,13 +1,14 @@
 'use client';
 
+import { Badge } from '@/components/ui/badge';
 import { Label } from '@/components/ui/label';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { Task } from '@/db/types';
+import { TaskWithLabels } from '@/db/types';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
 
 type TasksProps = {
-  tasks: Task[];
+  tasks: TaskWithLabels[];
 };
 
 export default function Tasks({ tasks }: TasksProps) {
@@ -41,6 +42,15 @@ export default function Tasks({ tasks }: TasksProps) {
             <div className="line-clamp-2 text-xs text-muted-foreground">
               {item.description?.substring(0, 300)}
             </div>
+            {item.labels?.length > 0 && (
+              <div className="flex flex-wrap gap-2">
+                {item.labels.map((label, index) => (
+                  <Badge key={index} variant="secondary">
+                    {label.name}
+                  </Badge>
+                ))}
+              </div>
+            )}
           </button>
         ))}
       </div>

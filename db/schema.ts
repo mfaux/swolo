@@ -66,16 +66,20 @@ export const tasks = pgTable('tasks', {
 });
 
 // Labels table
-export const labels = pgTable('labels', {
-  id: varchar({ length: cuidLength })
-    .$defaultFn(() => createId())
-    .primaryKey(),
-  name: text().notNull(),
-  color: text(),
-  userId: varchar({ length: userIdLength })
-    .references(() => users.id)
-    .notNull(),
-});
+export const labels = pgTable(
+  'labels',
+  {
+    id: varchar({ length: cuidLength }).$defaultFn(() => createId()),
+    name: text().notNull(),
+    color: text(),
+    userId: varchar({ length: userIdLength })
+      .references(() => users.id)
+      .notNull(),
+  },
+  (table) => ({
+    pk: primaryKey({ columns: [table.id, table.name, table.userId] }),
+  }),
+);
 
 // Task-Label join table
 export const taskLabels = pgTable(

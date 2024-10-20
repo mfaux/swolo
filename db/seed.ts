@@ -78,7 +78,6 @@ async function seedTasks() {
       status: 'todo',
       userId: 'fox',
       projectId: 'swolo',
-      key: 'my-task',
     },
     {
       id: designLayout,
@@ -128,6 +127,7 @@ async function seedTasks() {
     { taskId: authModule, labelId: labelBug },
     { taskId: setupDb, labelId: labelFeat },
     { taskId: createApi, labelId: labelFeat },
+    { taskId: createApi, labelId: labelDev },
     { taskId: frontend, labelId: labelDev },
   ]);
 }
