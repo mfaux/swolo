@@ -7,6 +7,7 @@ import {
   primaryKey,
   text,
   timestamp,
+  unique,
   varchar,
 } from 'drizzle-orm/pg-core';
 
@@ -26,20 +27,26 @@ export const users = pgTable('users', {
 });
 
 // Projects table
-export const projects = pgTable('projects', {
-  id: varchar({ length: cuidLength })
-    .$defaultFn(() => createId())
-    .primaryKey(),
-  name: text().notNull(),
-  description: text(),
-  createdAt: timestamp().defaultNow().notNull(),
-  updatedAt: timestamp().defaultNow().notNull(),
-  parentId: varchar().references((): AnyPgColumn => projects.id),
-  userId: varchar({ length: userIdLength })
-    .references(() => users.id)
-    .notNull(),
-  key: varchar({ length: 30 }),
-});
+export const projects = pgTable(
+  'projects',
+  {
+    id: varchar({ length: cuidLength })
+      .$defaultFn(() => createId())
+      .primaryKey(),
+    name: text().notNull(),
+    description: text(),
+    createdAt: timestamp().defaultNow().notNull(),
+    updatedAt: timestamp().defaultNow().notNull(),
+    parentId: varchar().references((): AnyPgColumn => projects.id),
+    userId: varchar({ length: userIdLength })
+      .references(() => users.id)
+      .notNull(),
+    key: varchar({ length: 20 }).notNull(),
+  },
+  (t) => ({
+    unq: unique().on(t.key, t.userId), // ensure unique project keys for the user
+  }),
+);
 
 // Tasks table
 export const tasks = pgTable('tasks', {
@@ -56,7 +63,6 @@ export const tasks = pgTable('tasks', {
   userId: varchar({ length: userIdLength })
     .references(() => users.id)
     .notNull(),
-  key: varchar({ length: 30 }),
 });
 
 // Labels table

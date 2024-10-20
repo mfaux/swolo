@@ -1,13 +1,28 @@
 import { getConstants, init } from '@paralleldrive/cuid2';
 import { db } from './drizzle';
-import { projects, tasks, users } from './schema';
+import {
+  labels,
+  projectLabels,
+  projects,
+  taskLabels,
+  tasks,
+  users,
+} from './schema';
 
 const cuidLength = getConstants().bigLength;
 const createId = init({ length: cuidLength });
 
+function createIds(count: number) {
+  return Array.from({ length: count }, createId);
+}
+
+const [labelFeat, labelBug, labelEnhancement, labelHobby, labelDev] =
+  createIds(5);
+
 async function seed() {
   console.log('Starting seed process...');
   await seedUsers();
+  await seedLabels();
   await seedProjects();
   await seedTasks();
 
@@ -24,6 +39,16 @@ async function seedUsers() {
   ]);
 }
 
+async function seedLabels() {
+  await db.insert(labels).values([
+    { id: labelFeat, name: 'feat', userId: 'fox' },
+    { id: labelBug, name: 'bug', userId: 'fox' },
+    { id: labelEnhancement, name: 'enhancement', userId: 'fox' },
+    { id: labelHobby, name: 'hobby', userId: 'fox' },
+    { id: labelDev, name: 'dev', userId: 'fox' },
+  ]);
+}
+
 async function seedProjects() {
   await db.insert(projects).values([
     {
@@ -34,12 +59,20 @@ async function seedProjects() {
       key: 'swolo',
     },
   ]);
+
+  await db.insert(projectLabels).values([
+    { projectId: 'swolo', labelId: labelHobby },
+    { projectId: 'swolo', labelId: labelDev },
+  ]);
 }
 
 async function seedTasks() {
+  const [myTask, designLayout, authModule, setupDb, createApi, frontend] =
+    createIds(6);
+
   await db.insert(tasks).values([
     {
-      id: createId(),
+      id: myTask,
       title: 'Implement synching',
       description: 'Sync data from the cloud to the local desktop.',
       status: 'todo',
@@ -48,50 +81,54 @@ async function seedTasks() {
       key: 'my-task',
     },
     {
-      id: createId(),
+      id: designLayout,
       title: 'Design app layout',
       description: 'Create wireframes and mockups for the app.',
       status: 'in-progress',
       userId: 'fox',
       projectId: 'swolo',
-      key: 'design-layout',
     },
     {
-      id: createId(),
+      id: authModule,
       title: 'Develop authentication module',
       description: 'Implement user login and registration functionality.',
       status: 'todo',
       userId: 'fox',
       projectId: 'swolo',
-      key: 'auth-module',
     },
     {
-      id: createId(),
+      id: setupDb,
       title: 'Set up database',
       description: 'Configure the database schema and connections.',
       status: 'todo',
       userId: 'fox',
       projectId: 'swolo',
-      key: 'setup-database',
     },
     {
-      id: createId(),
+      id: createApi,
       title: 'Create API endpoints',
       description: 'Develop RESTful API endpoints for the app.',
       status: 'todo',
       userId: 'fox',
       projectId: 'swolo',
-      key: 'create-api',
     },
     {
-      id: createId(),
+      id: frontend,
       title: 'Implement frontend',
       description: 'Build the frontend using React.',
       status: 'todo',
       userId: 'fox',
       projectId: 'swolo',
-      key: 'implement-frontend',
     },
+  ]);
+
+  await db.insert(taskLabels).values([
+    { taskId: myTask, labelId: labelFeat },
+    { taskId: designLayout, labelId: labelEnhancement },
+    { taskId: authModule, labelId: labelBug },
+    { taskId: setupDb, labelId: labelFeat },
+    { taskId: createApi, labelId: labelFeat },
+    { taskId: frontend, labelId: labelDev },
   ]);
 }
 

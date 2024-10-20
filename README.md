@@ -3,7 +3,7 @@
 Inspired by the
 [Getting Things Done](https://en.wikipedia.org/wiki/Getting_Things_Done)
 methodology and Ben Solo's iconic shirtless scene, Swolo is a
-**project management and note-taking app** designed for a party of one.
+**project management** and **note-taking app** designed for a party of one.
 
 Capture tasks, manage projects, and take notes with confidence — just like Ben,
 you're swol enough to handle anything your workload throws at you.
@@ -51,7 +51,7 @@ docker compose up -d
 
 Feel free to change the database settings in the `.env` and `docker-compose.yaml` files to your liking.
 
-Then, run the database migrations and seed the database with emails and folders:
+Then, initialize the database and seed it with some tasks and projects:
 
 ```bash
 pnpm db:migrate
@@ -63,6 +63,15 @@ Finally, run the Next.js development server:
 ```bash
 pnpm dev
 ```
+
+> [!NOTE]  
+> While Swolo is in alpha, the db will contain a single migration and seed file
+> for rapid development. After changing the schema, you will need to reinitialize
+> the database (causing all data to be lost):
+>
+> ```
+> pnpm db:reset
+> ```
 
 ## Contributing
 
