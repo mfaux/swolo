@@ -14,7 +14,7 @@ export default async function Page({ params }: { params: { id: string } }) {
   return (
     <div>
       <h1>{project[0].name}</h1>
-      <Tasks tasks={tasks} />
+      <Tasks tasks={tasks} projects={[]} />
     </div>
   );
 }
