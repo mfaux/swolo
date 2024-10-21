@@ -4,17 +4,9 @@ import { HeaderBar } from '@/components/ui/shell/header-bar';
 import { Main } from '@/components/ui/shell/main';
 import { Shell } from '@/components/ui/shell/shell';
 import { getProjects } from '@/db/queries';
-import localFont from 'next/font/local';
+import { fontSans } from '@/lib/fonts';
 import './globals.css';
-
-const geistSans = localFont({
-  src: './_fonts/GeistVF.woff',
-  variable: '--font-geist-sans',
-});
-const geistMono = localFont({
-  src: './_fonts/GeistMonoVF.woff',
-  variable: '--font-geist-mono',
-});
+import './icon.css';
 
 export default async function RootLayout({
   children,
@@ -24,8 +16,8 @@ export default async function RootLayout({
   const projects = await getProjects({ userId: 'fox' });
 
   return (
-    <html lang="en">
-      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" className={`${fontSans.variable}`}>
+      <body>
         <Shell>
           <HeaderBar>
             <Toolbar projects={projects} />

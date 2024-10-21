@@ -40,6 +40,7 @@ export const getTasks = async (
       dueDate: tasks.dueDate,
       description: tasks.description,
       status: tasks.status,
+      projectId: tasks.projectId,
       projectName: parentProject.name,
       labels: sql<{ id: string; name: string; color: string }[]>`
         CASE 
@@ -55,13 +56,10 @@ export const getTasks = async (
     .leftJoin(labels, eq(taskLabels.labelId, labels.id))
     .limit(limit)
     .offset(offset)
-    // .where(eq(tasks.userId, params.userId))
     .where(
       and(
         eq(tasks.userId, params.userId),
-        'projectId' in params
-          ? eq(tasks.projectId, params.projectId!)
-          : undefined,
+        params.projectId ? eq(tasks.projectId, params.projectId) : undefined,
       ),
     )
     .groupBy(tasks.id, parentProject.name);
@@ -115,7 +113,7 @@ export const getProjects = async (
     .where(
       and(
         eq(projects.userId, params.userId),
-        'projectId' in params ? eq(projects.id, params.projectId!) : undefined,
+        params.projectId ? eq(projects.id, params.projectId) : undefined,
       ),
     )
     .groupBy(projects.id, parentProject.name);

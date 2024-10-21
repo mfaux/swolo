@@ -4,7 +4,7 @@ export type Project = typeof projects.$inferSelect;
 export type Task = typeof tasks.$inferSelect;
 export type Label = typeof labels.$inferSelect;
 
-type LabelWithoutUserId = Omit<Label, 'userId'>;
+export type LabelWithoutUserId = Omit<Label, 'userId'>;
 
 export type ProjectWithLabels = {
   parentName?: string | null;
@@ -14,4 +14,4 @@ export type ProjectWithLabels = {
 export type TaskWithLabels = {
   projectName: string | null;
   labels: LabelWithoutUserId[];
-} & Omit<Task, 'userId' | 'projectId'>;
+} & Omit<Task, 'userId'>;
