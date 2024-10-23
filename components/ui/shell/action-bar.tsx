@@ -66,7 +66,7 @@ export const ActionBar = () => {
   return (
     <div
       className={
-        '[grid-area:actionbar] w-max flex flex-col h-full border-r shadow-md'
+        '[grid-area:actionbar] w-max flex flex-col h-full border-r shadow-md gap-3'
       }
     >
       {buttons}
@@ -105,9 +105,9 @@ export const ActionBarButton = ({
       size="default"
       onClick={onClick}
       aria-label={label}
-      className="h-12 w-12"
+      className="h-13 w-13"
     >
-      <Icon className="h-6 w-6" />
+      <Icon className="h-5 w-5" />
     </Button>
   );
 };

@@ -4,17 +4,20 @@ import { getProjects, getTasks } from '@/db/queries';
 
 export default async function Page({ params }: { params: { id: string } }) {
   // TODO: fix overfetching
-  const project = await getProjects({ userId: 'fox', projectId: params.id });
-  const tasks = await getTasks({ userId: 'fox', projectId: params.id });
+  // const project = await getProjects({ userId: 'fox', projectId: params.id });
+  const projects = await getProjects({ userId: 'fox' });
 
-  if (project.length == 0) {
+  const userProject = projects.find((project) => project.id === params.id);
+  if (!userProject) {
     return <div>Project not found</div>;
   }
 
+  const tasks = await getTasks({ userId: 'fox', projectId: params.id });
+
   return (
     <div>
-      <h1>{project[0].name}</h1>
-      <Tasks tasks={tasks} />
+      <h1>{userProject.name}</h1>
+      <Tasks tasks={tasks} projects={projects} />
     </div>
   );
 }

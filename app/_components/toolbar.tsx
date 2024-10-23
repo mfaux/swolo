@@ -1,6 +1,5 @@
 'use client';
 
-import { NewTaskDialog } from '@/app/_components/new-task-dialog';
 import { Input } from '@/components/ui/input';
 import {
   Menubar,
@@ -15,6 +14,7 @@ import { NewProjectDialog } from '@/app/_components/new-project-dialog';
 import { Button } from '@/components/ui/button';
 import { ProjectWithLabels } from '@/db/types';
 import { useState } from 'react';
+import TaskDialog from './task-dialog';
 
 type ToolbarProps = {
   projects: ProjectWithLabels[];
@@ -46,10 +46,7 @@ const Toolbar = ({ projects }: ToolbarProps) => {
       </div>
 
       {showNewTask && (
-        <NewTaskDialog
-          projects={projects}
-          onOpenChange={() => setShowNewTask(false)}
-        />
+        <TaskDialog projects={projects} onClose={() => setShowNewTask(false)} />
       )}
     </div>
   );
@@ -70,11 +67,11 @@ const NewItemMenu = ({ projects }: NewItemMenuProps) => {
           <ChevronDown className="w-4 h-4" />
         </MenubarTrigger>
         <MenubarContent>
-          <MenubarItem onClick={() => setShowNewProject(true)}>
-            New Project
-          </MenubarItem>
           <MenubarItem onClick={() => setShowNewTask(true)}>
             New Task
+          </MenubarItem>
+          <MenubarItem onClick={() => setShowNewProject(true)}>
+            New Project
           </MenubarItem>
         </MenubarContent>
       </MenubarMenu>
@@ -84,10 +81,7 @@ const NewItemMenu = ({ projects }: NewItemMenuProps) => {
         onOpenChange={() => setShowNewProject(false)}
       />
       {showNewTask && (
-        <NewTaskDialog
-          projects={projects}
-          onOpenChange={() => setShowNewTask(false)}
-        />
+        <TaskDialog projects={projects} onClose={() => setShowNewTask(false)} />
       )}
     </Menubar>
   );

@@ -2,16 +2,20 @@
 
 import { Badge } from '@/components/ui/badge';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { TaskWithLabels } from '@/db/types';
+import { ProjectWithLabels, TaskWithLabels } from '@/db/types';
 import { cn } from '@/lib/utils';
 import { useState } from 'react';
+import TaskDialog from './task-dialog';
 
 type TasksProps = {
   tasks: TaskWithLabels[];
+  projects: ProjectWithLabels[];
 };
 
-export default function Tasks({ tasks }: TasksProps) {
-  const [task, setTask] = useState({ selected: '' });
+export default function Tasks({ tasks, projects }: TasksProps) {
+  const [task, setTask] = useState<TaskWithLabels>();
+  const [showEditor, setShowEditor] = useState(false);
+
   return (
     <ScrollArea className="h-screen">
       <div className="flex flex-col gap-4 p-4">
@@ -20,14 +24,11 @@ export default function Tasks({ tasks }: TasksProps) {
             key={item.id}
             className={cn(
               'flex flex-col items-start gap-3 rounded-lg border p-3 text-left text-sm transition-all hover:bg-accent max-w-96 shadow-sm',
-              task.selected === item.id && 'bg-muted',
             )}
-            onClick={() =>
-              setTask({
-                ...task,
-                selected: item.id,
-              })
-            }
+            onClick={() => {
+              setTask(item);
+              setShowEditor(true);
+            }}
           >
             <div className="flex w-full flex-col gap-1">
               <div className="flex items-center">
@@ -50,6 +51,15 @@ export default function Tasks({ tasks }: TasksProps) {
             )}
           </button>
         ))}
+
+        {showEditor && task && (
+          <TaskDialog
+            task={task}
+            projects={projects}
+            isNew={false}
+            onClose={() => setShowEditor(false)}
+          />
+        )}
       </div>
     </ScrollArea>
   );
