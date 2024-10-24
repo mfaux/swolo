@@ -56,7 +56,6 @@ export default function Tasks({ tasks, projects }: TasksProps) {
           <TaskDialog
             task={task}
             projects={projects}
-            isNew={false}
             onClose={() => setShowEditor(false)}
           />
         )}

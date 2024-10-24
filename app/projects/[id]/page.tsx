@@ -2,7 +2,8 @@
 import Tasks from '@/app/_components/tasks';
 import { getProjects, getTasks } from '@/db/queries';
 
-export default async function Page({ params }: { params: { id: string } }) {
+export default async function Page(props: { params: Promise<{ id: string }> }) {
+  const params = await props.params;
   // TODO: fix overfetching
   // const project = await getProjects({ userId: 'fox', projectId: params.id });
   const projects = await getProjects({ userId: 'fox' });
