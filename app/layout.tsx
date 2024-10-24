@@ -1,10 +1,6 @@
-import { Toolbar } from '@/app/_components/toolbar';
-import { ActionBar } from '@/components/ui/shell/action-bar';
-import { HeaderBar } from '@/components/ui/shell/header-bar';
-import { Main } from '@/components/ui/shell/main';
-import { Shell } from '@/components/ui/shell/shell';
-import { getProjects } from '@/db/queries';
+import { SidebarProvider } from '@/components/ui/sidebar';
 import { fontSans } from '@/lib/fonts';
+import { AppSidebar } from './_components/app-sidebar/app-sidebar';
 import './globals.css';
 import './icon.css';
 
@@ -13,18 +9,25 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const projects = await getProjects({ userId: 'fox' });
+  // const projects = await getProjects({ userId: 'fox' });
 
   return (
     <html lang="en" className={`${fontSans.variable}`}>
       <body>
-        <Shell>
+        <SidebarProvider>
+          <AppSidebar />
+          <main>
+            {/* <SidebarTrigger /> */}
+            {children}
+          </main>
+        </SidebarProvider>
+        {/* <Shell>
           <HeaderBar>
             <Toolbar projects={projects} />
           </HeaderBar>
-          <ActionBar />
+          <ActionBar />        
           <Main>{children}</Main>
-        </Shell>
+        </Shell> */}
       </body>
     </html>
   );
