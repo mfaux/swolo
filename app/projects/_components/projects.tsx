@@ -9,7 +9,6 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Label } from '@/components/ui/label';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { ProjectWithLabels } from '@/db/types';
 import { MoreHorizontal, Trash2 } from 'lucide-react';
@@ -23,8 +22,6 @@ type ProjectsProps = {
 export default function Projects({ projects }: ProjectsProps) {
   return (
     <ScrollArea className="h-screen">
-      <Label>Projects</Label>
-
       <div className="flex flex-col gap-4 p-4">
         {projects.map((item) => (
           <ProjectCard key={item.id} project={item} />
