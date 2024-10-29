@@ -66,7 +66,7 @@ export const ActionBar = () => {
   return (
     <div
       className={
-        '[grid-area:actionbar] w-max flex flex-col h-full border-r shadow-md gap-3'
+        '[grid-area:sidebar] w-max flex flex-col h-full border-r shadow-md gap-3'
       }
     >
       {buttons}

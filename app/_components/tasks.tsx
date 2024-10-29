@@ -17,7 +17,7 @@ export default function Tasks({ tasks, projects }: TasksProps) {
   const [showEditor, setShowEditor] = useState(false);
 
   return (
-    <ScrollArea className="h-screen">
+    <ScrollArea>
       <div className="flex flex-col gap-4 p-4">
         {tasks.map((item) => (
           <button
