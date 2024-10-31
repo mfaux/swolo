@@ -16,7 +16,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { SubmitButton } from '@/components/ui/submit-button';
-import { ProjectWithLabels } from '@/db/types';
+import { ProjectWithLabels } from '@/shared/types';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import { FolderKanban } from 'lucide-react';
 import { useFormStatus } from 'react-dom';

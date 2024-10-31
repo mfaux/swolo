@@ -9,6 +9,9 @@ import {
   timestamp,
   varchar,
 } from 'drizzle-orm/pg-core';
+import { createInsertSchema } from 'drizzle-zod';
+
+// TODO: move defaults like createId to actions
 
 const cuidLength = getConstants().bigLength;
 const createId = init({ length: cuidLength });
@@ -35,7 +38,7 @@ export const projects = pgTable(
     name: text().notNull(),
     description: text(),
     createdAt: timestamp().defaultNow().notNull(),
-    updatedAt: timestamp().defaultNow().notNull(),
+    updatedAt: timestamp(),
     parentId: varchar().references((): AnyPgColumn => projects.id),
     userId: varchar({ length: userIdLength })
       .references(() => users.id)
@@ -45,6 +48,16 @@ export const projects = pgTable(
     pk: primaryKey({ columns: [table.id, table.name, table.userId] }),
   }),
 );
+
+// Schema for inserting a project - can be used to validate API requests
+export const insertProjectSchema = createInsertSchema(projects, {
+  name: (schema) => schema.name.trim().min(1).max(100),
+});
+
+// TODO: see what kind of error message zod returns when the name is empty
+
+// .min(1, 'Project name cannot be empty')
+// .max(100, 'Project name must be less than 100 characters'),
 
 // Tasks table
 export const tasks = pgTable(
@@ -58,7 +71,7 @@ export const tasks = pgTable(
     status: text().notNull().default('todo'),
     dueDate: timestamp(),
     createdAt: timestamp().defaultNow().notNull(),
-    updatedAt: timestamp().defaultNow().notNull(),
+    updatedAt: timestamp(),
     projectId: varchar().references(() => projects.id),
     userId: varchar({ length: userIdLength })
       .references(() => users.id)
@@ -68,6 +81,12 @@ export const tasks = pgTable(
     pk: primaryKey({ columns: [table.id, table.title, table.userId] }),
   }),
 );
+
+// Schema for inserting a task - can be used to validate API requests
+export const taskTableSchema = createInsertSchema(tasks, {
+  title: (schema) =>
+    schema.title.trim().max(100, { message: 'Maximum 100 characters' }),
+});
 
 // Labels table
 export const labels = pgTable(
@@ -101,6 +120,8 @@ export const taskLabels = pgTable(
     pk: primaryKey({ columns: [table.taskId, table.labelId] }),
   }),
 );
+
+export const insertTaskLabelsSchema = createInsertSchema(taskLabels);
 
 // Project-Label join table
 export const projectLabels = pgTable(

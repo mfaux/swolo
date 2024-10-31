@@ -1,5 +1,5 @@
 'use server';
-import Tasks from '@/app/_components/tasks';
+import Tasks from '@/app/tasks/tasks';
 import { getProjects, getTasks } from '@/db/queries';
 
 export default async function Page(props: { params: Promise<{ id: string }> }) {
