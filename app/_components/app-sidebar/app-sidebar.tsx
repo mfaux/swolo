@@ -10,6 +10,7 @@ import {
   SidebarHeader,
   SidebarMenuButton,
   SidebarRail,
+  useSidebar,
 } from '@/components/ui/sidebar';
 import { SVGIcon } from '@/components/ui/svg-icon';
 import Link from 'next/link';
@@ -52,27 +53,14 @@ const data = {
   ],
 };
 
-const Logo = () => (
-  <>
-    <div className="flex aspect-square size-8 items-center justify-center rounded-lg  text-sidebar-primary-foreground">
-      <SVGIcon src="/swolo.svg" alt="Logo" className="" />
-    </div>
-    <div className="flex flex-col gap-0.5 leading-none">
-      <span className="font-semibold">Swolo</span>
-      <span className="text-xs">v0.1.0</span>
-    </div>
-  </>
-);
-
-const ForwardedLogo = React.forwardRef(Logo);
-
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const { open } = useSidebar();
   return (
     <Sidebar collapsible="icon" {...props}>
       <SidebarHeader>
         <SidebarMenuButton size="lg" asChild>
           <Link href="/">
-            <div className="flex aspect-square size-8 items-center justify-center rounded-lg  text-sidebar-primary-foreground">
+            <div className="flex aspect-square size-8 items-center justify-center rounded-lg text-sidebar-primary-foreground">
               <SVGIcon src="/swolo.svg" alt="Logo" className="" />
             </div>
             <div className="flex flex-col gap-0.5 leading-none">

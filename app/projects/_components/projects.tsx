@@ -21,7 +21,7 @@ type ProjectsProps = {
 
 export default function Projects({ projects }: ProjectsProps) {
   return (
-    <ScrollArea className="h-screen">
+    <ScrollArea>
       <div className="flex flex-col gap-4 p-4">
         {projects.map((item) => (
           <ProjectCard key={item.id} project={item} />

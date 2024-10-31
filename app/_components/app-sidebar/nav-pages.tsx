@@ -22,7 +22,7 @@ export function NavPages({
 }) {
   return (
     <SidebarGroup>
-      <SidebarGroupLabel>Document</SidebarGroupLabel>
+      <SidebarGroupLabel>Write</SidebarGroupLabel>
       <SidebarMenu>
         {items.map((item) => (
           <SidebarMenuItem key={item.name}>
