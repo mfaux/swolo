@@ -1,9 +1,9 @@
 'use server';
 
 import { aliasedTable, and, eq, sql } from 'drizzle-orm';
+import { ProjectWithLabels, TaskWithLabels } from '../shared/types';
 import { db } from './drizzle';
 import { labels, projectLabels, projects, taskLabels, tasks } from './schema';
-import { ProjectWithLabels, TaskWithLabels } from './types';
 
 const parentProject = aliasedTable(projects, 'parent');
 

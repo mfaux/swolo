@@ -10,48 +10,67 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { ScrollArea } from '@/components/ui/scroll-area';
-import { ProjectWithLabels } from '@/shared/types';
+import { ProjectWithLabels, TaskWithLabels } from '@/shared/types';
 import { MoreHorizontal, Trash2 } from 'lucide-react';
-import { useRouter } from 'next/navigation';
-import { deleteProject } from '../actions';
+import { useState } from 'react';
+import TaskDialog from '../_components/task-dialog';
+import { deleteTask } from './actions';
 
-type ProjectsProps = {
+type TasksProps = {
+  tasks: TaskWithLabels[];
   projects: ProjectWithLabels[];
 };
 
-export default function Projects({ projects }: ProjectsProps) {
+export default function Tasks({ tasks, projects }: TasksProps) {
+  const [task, setTask] = useState<TaskWithLabels>();
+  const [showEditor, setShowEditor] = useState(false);
+
+  const handleTaskSelected = (task: TaskWithLabels) => {
+    setTask(task);
+    setShowEditor(true);
+  };
+
   return (
     <ScrollArea>
       <div className="flex flex-col gap-4 p-4">
-        {projects.map((item) => (
-          <ProjectCard key={item.id} project={item} />
+        {tasks.map((item) => (
+          <TaskCard
+            key={item.id}
+            task={item}
+            onTaskSelected={handleTaskSelected}
+          />
         ))}
       </div>
+      {showEditor && task && (
+        <TaskDialog
+          task={task}
+          projects={projects}
+          onClose={() => setShowEditor(false)}
+        />
+      )}
     </ScrollArea>
   );
 }
 
-type ProjectCardProps = {
-  project: ProjectWithLabels;
+type TaskCardProps = {
+  task: TaskWithLabels;
+  onTaskSelected: (task: TaskWithLabels) => void;
 };
 
-const ProjectCard = ({ project }: ProjectCardProps) => {
-  const router = useRouter();
+const TaskCard = ({ task, onTaskSelected }: TaskCardProps) => {
   const onDelete = async () => {
-    await deleteProject(project.id);
+    await deleteTask(task.id);
   };
 
   return (
     <Card
       className="w-full max-w-md transition-shadow hover:shadow-md relative"
-      onClick={() => {
-        router.push('/projects/' + project.id);
-      }}
+      onClick={() => onTaskSelected(task)}
     >
       <CardHeader className="pl-6 pt-6 pb-3">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2">
-            <CardTitle className="text-lg font-bold">{project.name}</CardTitle>
+            <CardTitle className="text-lg font-bold">{task.title}</CardTitle>
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -79,14 +98,14 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
         </div>
       </CardHeader>
       <CardContent>
-        {project.description && (
+        {task.description && (
           <p className="text-muted-foreground mb-4 line-clamp-3 text-left">
-            {project.description?.substring(0, 300)}
+            {task.description?.substring(0, 300)}
           </p>
         )}
-        {project.labels?.length > 0 && (
+        {task.labels?.length > 0 && (
           <div className="flex flex-wrap gap-2">
-            {project.labels.map((label, index) => (
+            {task.labels.map((label, index) => (
               <Badge key={index} variant="secondary">
                 {label.name}
               </Badge>

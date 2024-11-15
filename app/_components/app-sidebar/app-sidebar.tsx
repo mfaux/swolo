@@ -69,15 +69,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </div>
           </Link>
         </SidebarMenuButton>
-
-        {/* <TeamSwitcher teams={data.teams} /> */}
-        {/* {!open && <SidebarSeparator className="mx-0 " />} */}
       </SidebarHeader>
       <SidebarContent>
         <NavCapture items={data.navCapture} />
-        {/* {!open && <SidebarSeparator className="my-2" />} */}
         <NavPlan items={data.navPlan} />
-        {/* {!open && <SidebarSeparator className="my-2 " />} */}
         <NavPages items={data.navPages} />
       </SidebarContent>
       <SidebarFooter>

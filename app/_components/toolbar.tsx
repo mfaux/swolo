@@ -12,7 +12,7 @@ import { ChevronDown, Plus, Search } from 'lucide-react';
 
 import { NewProjectDialog } from '@/app/_components/new-project-dialog';
 import { Button } from '@/components/ui/button';
-import { ProjectWithLabels } from '@/db/types';
+import { ProjectWithLabels } from '@/shared/types';
 import { useState } from 'react';
 import TaskDialog from './task-dialog';
 
