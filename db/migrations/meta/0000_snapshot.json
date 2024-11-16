@@ -1,5 +1,5 @@
 {
-  "id": "4da14e02-2c2b-4142-9659-887300dc91a5",
+  "id": "ce53b1c9-d48d-43a7-81ff-ad2555f3a75d",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -67,7 +67,10 @@
             "id"
           ]
         }
-      }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
     },
     "public.project_labels": {
       "name": "project_labels",
@@ -124,7 +127,10 @@
           ]
         }
       },
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
     },
     "public.projects": {
       "name": "projects",
@@ -221,7 +227,10 @@
             "id"
           ]
         }
-      }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
     },
     "public.task_labels": {
       "name": "task_labels",
@@ -278,7 +287,10 @@
           ]
         }
       },
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
     },
     "public.tasks": {
       "name": "tasks",
@@ -388,7 +400,10 @@
             "id"
           ]
         }
-      }
+      },
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
     },
     "public.users": {
       "name": "users",
@@ -418,12 +433,18 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {},
+      "policies": {},
+      "checkConstraints": {},
+      "isRLSEnabled": false
     }
   },
   "enums": {},
   "schemas": {},
   "sequences": {},
+  "roles": {},
+  "policies": {},
+  "views": {},
   "_meta": {
     "columns": {},
     "schemas": {},

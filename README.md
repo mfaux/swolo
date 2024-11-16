@@ -40,7 +40,7 @@ pnpm install
 Create an .env file with the following:
 
 ```bash
-POSTGRES_URL=postgres://root:secret@localhost:5432/postgres
+DATABASE_URL=postgres://root:secret@localhost:5432/postgres
 ```
 
 Start the Postgres database with Docker Compose:

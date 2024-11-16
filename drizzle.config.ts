@@ -5,7 +5,7 @@ export default {
   schema: './db/schema.ts',
   out: './db/migrations',
   dbCredentials: {
-    url: process.env.POSTGRES_URL!,
+    url: process.env.DATABASE_URL!,
   },
   casing: 'snake_case',
 } satisfies Config;
