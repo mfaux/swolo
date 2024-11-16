@@ -57,6 +57,13 @@ async function seedProjects() {
       description: 'Project management and note-taking app wit GTD principles.',
       userId: 'fox',
     },
+    {
+      id: 'db_subproject',
+      name: 'Database subproject',
+      description: 'Subproject for setting up database and API endpoints.',
+      userId: 'fox',
+      parentId: 'swolo',
+    },
   ]);
 
   await db.insert(projectLabels).values([

@@ -1,5 +1,3 @@
-import { relations } from 'drizzle-orm';
-
 import { getConstants, init } from '@paralleldrive/cuid2';
 import {
   AnyPgColumn,
@@ -9,9 +7,10 @@ import {
   timestamp,
   varchar,
 } from 'drizzle-orm/pg-core';
+import { relations } from 'drizzle-orm/relations';
 import { createInsertSchema } from 'drizzle-zod';
 
-// TODO: move defaults like createId to actions
+// TODO: move defaults like createId to actions?
 
 const cuidLength = getConstants().bigLength;
 const createId = init({ length: cuidLength });
@@ -34,14 +33,17 @@ export const projects = pgTable(
   {
     id: varchar({ length: cuidLength })
       .$defaultFn(() => createId())
+      .unique()
       .notNull(),
     name: text().notNull(),
     description: text(),
     createdAt: timestamp().defaultNow().notNull(),
     updatedAt: timestamp(),
-    parentId: varchar().references((): AnyPgColumn => projects.id),
+    parentId: varchar().references((): AnyPgColumn => projects.id, {
+      onDelete: 'cascade',
+    }),
     userId: varchar({ length: userIdLength })
-      .references(() => users.id)
+      .references(() => users.id, { onDelete: 'cascade' })
       .notNull(),
   },
   (table) => ({
@@ -51,13 +53,12 @@ export const projects = pgTable(
 
 // Schema for inserting a project - can be used to validate API requests
 export const insertProjectSchema = createInsertSchema(projects, {
-  name: (schema) => schema.name.trim().min(1).max(100),
+  name: (schema) =>
+    schema.name
+      .trim()
+      .min(1, 'Name cannot be empty')
+      .max(100, 'Maximum 100 characters'),
 });
-
-// TODO: see what kind of error message zod returns when the name is empty
-
-// .min(1, 'Project name cannot be empty')
-// .max(100, 'Project name must be less than 100 characters'),
 
 // Tasks table
 export const tasks = pgTable(
@@ -65,6 +66,7 @@ export const tasks = pgTable(
   {
     id: varchar({ length: cuidLength })
       .$defaultFn(() => createId())
+      .unique()
       .notNull(),
     title: text().notNull(),
     description: text(),
@@ -72,9 +74,9 @@ export const tasks = pgTable(
     dueDate: timestamp(),
     createdAt: timestamp().defaultNow().notNull(),
     updatedAt: timestamp(),
-    projectId: varchar().references(() => projects.id),
+    projectId: varchar().references(() => projects.id, { onDelete: 'cascade' }),
     userId: varchar({ length: userIdLength })
-      .references(() => users.id)
+      .references(() => users.id, { onDelete: 'cascade' })
       .notNull(),
   },
   (table) => ({
@@ -83,7 +85,7 @@ export const tasks = pgTable(
 );
 
 // Schema for inserting a task - can be used to validate API requests
-export const taskTableSchema = createInsertSchema(tasks, {
+export const insertTaskSchema = createInsertSchema(tasks, {
   title: (schema) =>
     schema.title.trim().max(100, { message: 'Maximum 100 characters' }),
 });
@@ -92,11 +94,13 @@ export const taskTableSchema = createInsertSchema(tasks, {
 export const labels = pgTable(
   'labels',
   {
-    id: varchar({ length: cuidLength }).$defaultFn(() => createId()),
+    id: varchar({ length: cuidLength })
+      .$defaultFn(() => createId())
+      .unique(),
     name: text().notNull(),
     color: text(),
     userId: varchar({ length: userIdLength })
-      .references(() => users.id)
+      .references(() => users.id, { onDelete: 'cascade' })
       .notNull(),
   },
   (table) => ({
@@ -109,13 +113,12 @@ export const taskLabels = pgTable(
   'task_labels',
   {
     taskId: varchar()
-      .references(() => tasks.id)
+      .references(() => tasks.id, { onDelete: 'cascade' })
       .notNull(),
     labelId: varchar()
-      .references(() => labels.id)
+      .references(() => labels.id, { onDelete: 'cascade' })
       .notNull(),
   },
-
   (table) => ({
     pk: primaryKey({ columns: [table.taskId, table.labelId] }),
   }),
@@ -128,10 +131,10 @@ export const projectLabels = pgTable(
   'project_labels',
   {
     projectId: varchar()
-      .references(() => projects.id)
+      .references(() => projects.id, { onDelete: 'cascade' })
       .notNull(),
     labelId: varchar()
-      .references(() => labels.id)
+      .references(() => labels.id, { onDelete: 'cascade' })
       .notNull(),
   },
 

@@ -67,10 +67,10 @@ export default function TaskDialog({
     mode: 'onSubmit',
     resolver: zodResolver(taskFormSchema),
     defaultValues: {
-      title: task?.title || '',
-      description: task?.description || '',
-      status: task?.status || '',
-      projectId: task?.projectId || __SWOLO_NONE,
+      title: task?.title ?? '',
+      description: task?.description ?? '',
+      status: task?.status ?? '',
+      projectId: task?.projectId ?? __SWOLO_NONE,
     },
   });
 

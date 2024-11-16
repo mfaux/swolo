@@ -16,6 +16,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { SubmitButton } from '@/components/ui/submit-button';
+import { useToast } from '@/hooks/use-toast';
 import { ProjectWithLabels } from '@/shared/types';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import { FolderKanban } from 'lucide-react';
@@ -34,6 +35,7 @@ const NewProjectDialog = ({
   onOpenChange,
 }: NewProjectDialogProps) => {
   const status = useFormStatus();
+  const { toast } = useToast();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -42,6 +44,13 @@ const NewProjectDialog = ({
     const res = await createProject(formData);
     if (res.success) {
       onOpenChange();
+    } else {
+      if (res?.error) {
+        toast({
+          title: 'An error occurred',
+          description: res.error,
+        });
+      }
     }
   };
 

@@ -62,7 +62,17 @@ export const getTasks = async (
         params.projectId ? eq(tasks.projectId, params.projectId) : undefined,
       ),
     )
-    .groupBy(tasks.id, parentProject.name);
+    .groupBy(
+      tasks.id,
+      tasks.title,
+      tasks.createdAt,
+      tasks.updatedAt,
+      tasks.dueDate,
+      tasks.description,
+      tasks.status,
+      tasks.projectId,
+      parentProject.name,
+    );
 };
 
 type GetProjectsParams = {
@@ -116,5 +126,12 @@ export const getProjects = async (
         params.projectId ? eq(projects.id, params.projectId) : undefined,
       ),
     )
-    .groupBy(projects.id, parentProject.name);
+    .groupBy(
+      projects.id,
+      projects.name,
+      projects.createdAt,
+      projects.updatedAt,
+      projects.description,
+      parentProject.name,
+    );
 };
