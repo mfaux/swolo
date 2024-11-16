@@ -23,8 +23,8 @@ export const users = pgTable('users', {
     .$defaultFn(() => createId())
     .primaryKey(),
   // Clerk handles email, name, and other user profile data
-  createdAt: timestamp('created_at').defaultNow().notNull(),
-  updatedAt: timestamp('updated_at').defaultNow().notNull(),
+  createdAt: timestamp().defaultNow().notNull(),
+  updatedAt: timestamp().defaultNow().notNull(),
 });
 
 // Projects table
@@ -46,9 +46,7 @@ export const projects = pgTable(
       .references(() => users.id, { onDelete: 'cascade' })
       .notNull(),
   },
-  (table) => ({
-    pk: primaryKey({ columns: [table.id, table.name, table.userId] }),
-  }),
+  (table) => [primaryKey({ columns: [table.id, table.name, table.userId] })],
 );
 
 // Schema for inserting a project - can be used to validate API requests
@@ -79,9 +77,7 @@ export const tasks = pgTable(
       .references(() => users.id, { onDelete: 'cascade' })
       .notNull(),
   },
-  (table) => ({
-    pk: primaryKey({ columns: [table.id, table.title, table.userId] }),
-  }),
+  (table) => [primaryKey({ columns: [table.id, table.title, table.userId] })],
 );
 
 // Schema for inserting a task - can be used to validate API requests
@@ -103,9 +99,7 @@ export const labels = pgTable(
       .references(() => users.id, { onDelete: 'cascade' })
       .notNull(),
   },
-  (table) => ({
-    pk: primaryKey({ columns: [table.id, table.name, table.userId] }),
-  }),
+  (table) => [primaryKey({ columns: [table.id, table.name, table.userId] })],
 );
 
 // Task-Label join table
@@ -119,9 +113,7 @@ export const taskLabels = pgTable(
       .references(() => labels.id, { onDelete: 'cascade' })
       .notNull(),
   },
-  (table) => ({
-    pk: primaryKey({ columns: [table.taskId, table.labelId] }),
-  }),
+  (table) => [primaryKey({ columns: [table.taskId, table.labelId] })],
 );
 
 export const insertTaskLabelsSchema = createInsertSchema(taskLabels);
@@ -138,9 +130,7 @@ export const projectLabels = pgTable(
       .notNull(),
   },
 
-  (table) => ({
-    pk: primaryKey({ columns: [table.projectId, table.labelId] }),
-  }),
+  (table) => [primaryKey({ columns: [table.projectId, table.labelId] })],
 );
 
 // Define relations
