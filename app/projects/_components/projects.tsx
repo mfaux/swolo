@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { useToast } from '@/hooks/use-toast';
 import { ProjectWithLabels } from '@/shared/types';
 import { MoreHorizontal, Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
@@ -36,9 +37,17 @@ type ProjectCardProps = {
 };
 
 const ProjectCard = ({ project }: ProjectCardProps) => {
+  const { toast } = useToast();
   const router = useRouter();
   const onDelete = async () => {
-    await deleteProject(project.id);
+    const res = await deleteProject(project.id);
+
+    if (res?.error) {
+      toast({
+        title: 'An error occurred',
+        description: res.error,
+      });
+    }
   };
 
   return (

@@ -10,6 +10,7 @@ export const deleteProject = async (id: string) => {
     await db.delete(projects).where(eq(projects.id, id));
     revalidatePath('/');
   } catch (e) {
+    console.error(e);
     return {
       error: 'Failed to delete project',
     };

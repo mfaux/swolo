@@ -10,6 +10,7 @@ export const deleteTask = async (id: string) => {
     await db.delete(tasks).where(eq(tasks.id, id));
     revalidatePath('/');
   } catch (e) {
+    console.log(e);
     return {
       error: 'Failed to delete task',
     };

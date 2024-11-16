@@ -1,5 +1,5 @@
 {
-  "id": "9c127647-5b2f-49dd-bebb-0d107b14ece6",
+  "id": "4da14e02-2c2b-4142-9659-887300dc91a5",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -11,8 +11,8 @@
         "id": {
           "name": "id",
           "type": "varchar(32)",
-          "primaryKey": true,
-          "notNull": true
+          "primaryKey": false,
+          "notNull": false
         },
         "name": {
           "name": "name",
@@ -45,12 +45,29 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "compositePrimaryKeys": {
+        "labels_id_name_user_id_pk": {
+          "name": "labels_id_name_user_id_pk",
+          "columns": [
+            "id",
+            "name",
+            "user_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "labels_id_unique": {
+          "name": "labels_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "id"
+          ]
+        }
+      }
     },
     "public.project_labels": {
       "name": "project_labels",
@@ -81,7 +98,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "project_labels_label_id_labels_id_fk": {
@@ -94,7 +111,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -116,7 +133,7 @@
         "id": {
           "name": "id",
           "type": "varchar(32)",
-          "primaryKey": true,
+          "primaryKey": false,
           "notNull": true
         },
         "name": {
@@ -142,8 +159,7 @@
           "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
+          "notNull": false
         },
         "parent_id": {
           "name": "parent_id",
@@ -156,12 +172,6 @@
           "type": "varchar(191)",
           "primaryKey": false,
           "notNull": true
-        },
-        "key": {
-          "name": "key",
-          "type": "varchar(30)",
-          "primaryKey": false,
-          "notNull": false
         }
       },
       "indexes": {},
@@ -176,7 +186,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "projects_user_id_users_id_fk": {
@@ -189,12 +199,29 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "compositePrimaryKeys": {
+        "projects_id_name_user_id_pk": {
+          "name": "projects_id_name_user_id_pk",
+          "columns": [
+            "id",
+            "name",
+            "user_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "projects_id_unique": {
+          "name": "projects_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "id"
+          ]
+        }
+      }
     },
     "public.task_labels": {
       "name": "task_labels",
@@ -225,7 +252,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "task_labels_label_id_labels_id_fk": {
@@ -238,7 +265,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
@@ -260,7 +287,7 @@
         "id": {
           "name": "id",
           "type": "varchar(32)",
-          "primaryKey": true,
+          "primaryKey": false,
           "notNull": true
         },
         "title": {
@@ -299,8 +326,7 @@
           "name": "updated_at",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true,
-          "default": "now()"
+          "notNull": false
         },
         "project_id": {
           "name": "project_id",
@@ -313,12 +339,6 @@
           "type": "varchar(191)",
           "primaryKey": false,
           "notNull": true
-        },
-        "key": {
-          "name": "key",
-          "type": "varchar(30)",
-          "primaryKey": false,
-          "notNull": false
         }
       },
       "indexes": {},
@@ -333,7 +353,7 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         },
         "tasks_user_id_users_id_fk": {
@@ -346,12 +366,29 @@
           "columnsTo": [
             "id"
           ],
-          "onDelete": "no action",
+          "onDelete": "cascade",
           "onUpdate": "no action"
         }
       },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "compositePrimaryKeys": {
+        "tasks_id_title_user_id_pk": {
+          "name": "tasks_id_title_user_id_pk",
+          "columns": [
+            "id",
+            "title",
+            "user_id"
+          ]
+        }
+      },
+      "uniqueConstraints": {
+        "tasks_id_unique": {
+          "name": "tasks_id_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "id"
+          ]
+        }
+      }
     },
     "public.users": {
       "name": "users",

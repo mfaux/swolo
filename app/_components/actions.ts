@@ -1,7 +1,7 @@
 'use server';
 
 import { db } from '@/db/drizzle';
-import { insertProjectSchema, projects, tasks } from '@/db/schema';
+import { projects, tasks } from '@/db/schema';
 import { __SWOLO_NONE, TaskFormData, taskFormSchema } from '@/shared/types';
 import { getConstants, init } from '@paralleldrive/cuid2';
 import { eq } from 'drizzle-orm';
@@ -18,24 +18,21 @@ export const createProject = async (formData: FormData) => {
     projectName: formData.get('projectName'),
   };
 
+  const { projectName } = rawFormData;
+
   try {
-    const validatedFields = insertProjectSchema.parse({
-      projectName: rawFormData.projectName,
-    });
-
-    const { name } = validatedFields;
-
     // TODO: ensure the user is authorized
     // https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations#authentication-and-authorization
 
     await db.insert(projects).values({
-      name: name,
+      name: projectName as string,
       userId: userId,
     });
 
     revalidatePath('/');
     return { success: true };
   } catch (e) {
+    console.error(e);
     if (e instanceof z.ZodError) {
       return { error: e.errors[0].message, previous: rawFormData };
     } else if (e instanceof Error) {

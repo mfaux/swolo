@@ -10,6 +10,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { ScrollArea } from '@/components/ui/scroll-area';
+import { useToast } from '@/hooks/use-toast';
 import { ProjectWithLabels, TaskWithLabels } from '@/shared/types';
 import { MoreHorizontal, Trash2 } from 'lucide-react';
 import { useState } from 'react';
@@ -58,8 +59,16 @@ type TaskCardProps = {
 };
 
 const TaskCard = ({ task, onTaskSelected }: TaskCardProps) => {
+  const { toast } = useToast();
   const onDelete = async () => {
-    await deleteTask(task.id);
+    const res = await deleteTask(task.id);
+
+    if (res?.error) {
+      toast({
+        title: 'An error occurred',
+        description: res.error,
+      });
+    }
   };
 
   return (
