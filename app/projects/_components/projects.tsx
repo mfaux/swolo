@@ -1,5 +1,6 @@
 'use client';
 
+import ProjectDialog from '@/app/_components/project-dialog';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
@@ -7,13 +8,15 @@ import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { ScrollArea } from '@/components/ui/scroll-area';
 import { useToast } from '@/hooks/use-toast';
 import { ProjectWithLabels } from '@/shared/types';
-import { MoreHorizontal, Trash2 } from 'lucide-react';
+import { ClipboardCheck, MoreHorizontal, Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
+import { useState } from 'react';
 import { deleteProject } from '../actions';
 
 type ProjectsProps = {
@@ -21,24 +24,44 @@ type ProjectsProps = {
 };
 
 export default function Projects({ projects }: ProjectsProps) {
+  const [project, setProject] = useState<ProjectWithLabels>();
+  const [showEditor, setShowEditor] = useState(false);
+
+  const handleProjectSelected = (project: ProjectWithLabels) => {
+    setProject(project);
+    setShowEditor(true);
+  };
+
   return (
     <ScrollArea>
       <div className="flex flex-col gap-4 p-4">
         {projects.map((item) => (
-          <ProjectCard key={item.id} project={item} />
+          <ProjectCard
+            key={item.id}
+            project={item}
+            onProjectSelected={handleProjectSelected}
+          />
         ))}
       </div>
+      {showEditor && project && (
+        <ProjectDialog
+          project={project}
+          projects={projects}
+          onClose={() => setShowEditor(false)}
+        />
+      )}
     </ScrollArea>
   );
 }
 
 type ProjectCardProps = {
   project: ProjectWithLabels;
+  onProjectSelected: (project: ProjectWithLabels) => void;
 };
 
-const ProjectCard = ({ project }: ProjectCardProps) => {
-  const { toast } = useToast();
+const ProjectCard = ({ project, onProjectSelected }: ProjectCardProps) => {
   const router = useRouter();
+  const { toast } = useToast();
   const onDelete = async () => {
     const res = await deleteProject(project.id);
 
@@ -53,9 +76,7 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
   return (
     <Card
       className="w-full max-w-md transition-shadow hover:shadow-md relative"
-      onClick={() => {
-        router.push('/projects/' + project.id);
-      }}
+      onClick={() => onProjectSelected(project)}
     >
       <CardHeader className="pl-6 pt-6 pb-3">
         <div className="flex items-center justify-between">
@@ -74,6 +95,16 @@ const ProjectCard = ({ project }: ProjectCardProps) => {
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
+              <DropdownMenuItem
+                onClick={(event) => {
+                  event.stopPropagation();
+                  router.push('/projects/' + project.id);
+                }}
+              >
+                <ClipboardCheck className="mr-2 h-4 w-4" />
+                <span>Go to tasks</span>
+              </DropdownMenuItem>
+              <DropdownMenuSeparator />
               <DropdownMenuItem
                 onClick={(event) => {
                   event.stopPropagation();
