@@ -14,8 +14,8 @@ import { useToast } from '@/hooks/use-toast';
 import { ProjectWithLabels, TaskWithLabels } from '@/shared/types';
 import { MoreHorizontal, Trash2 } from 'lucide-react';
 import { useState } from 'react';
-import TaskDialog from '../_components/task-dialog';
-import { deleteTask } from './actions';
+import TaskDialog from '../../_components/task-dialog';
+import { deleteTask } from '../actions';
 
 type TasksProps = {
   tasks: TaskWithLabels[];

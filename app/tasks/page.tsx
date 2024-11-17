@@ -1,4 +1,4 @@
-import Tasks from '@/app/tasks/tasks';
+import Tasks from '@/app/tasks/_components/tasks';
 import { getProjects, getTasks } from '@/db/queries';
 
 export default async function TasksPage() {

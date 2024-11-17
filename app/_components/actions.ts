@@ -2,7 +2,13 @@
 
 import { db } from '@/db/drizzle';
 import { projects, tasks } from '@/db/schema';
-import { __SWOLO_NONE, TaskFormData, taskFormSchema } from '@/shared/types';
+import {
+  __SWOLO_NONE_SELECTED,
+  ProjectFormData,
+  projectFormSchema,
+  TaskFormData,
+  taskFormSchema,
+} from '@/shared/types';
 import { getConstants, init } from '@paralleldrive/cuid2';
 import { eq } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
@@ -45,6 +51,50 @@ export const createProject = async (formData: FormData) => {
   }
 };
 
+export const upsertProject = async (formData: ProjectFormData, id?: string) => {
+  // TODO: authorization. ensure user has access to id, project, labels, etc.
+  const updating = id != null;
+
+  const validatedData = projectFormSchema.safeParse(formData);
+
+  if (!validatedData.success) {
+    const fieldErrors = validatedData.error.flatten().fieldErrors;
+    return { fieldErrors };
+  }
+
+  const data = validatedData.data;
+  data.parentId =
+    formData.parentId === __SWOLO_NONE_SELECTED ? null : formData.parentId;
+
+  try {
+    if (updating) {
+      await db
+        .update(projects)
+        .set({ ...data, updatedAt: new Date() })
+        .where(eq(projects.id, id));
+    } else {
+      await db.insert(projects).values({
+        id: createId(),
+        createdAt: new Date(),
+        ...data,
+        userId: userId,
+      });
+    }
+  } catch (e) {
+    const message = updating
+      ? 'Failed to update project'
+      : 'Failed to create project';
+    return { error: message };
+  }
+
+  revalidatePath('/projects');
+
+  if (data.parentId !== __SWOLO_NONE_SELECTED) {
+    revalidatePath(`/projects/${data.parentId}`);
+  }
+  return { success: true };
+};
+
 export const upsertTask = async (formData: TaskFormData, id?: string) => {
   // TODO: authorization. ensure user has access to id, project, labels, etc.
   const updating = id != null;
@@ -58,7 +108,7 @@ export const upsertTask = async (formData: TaskFormData, id?: string) => {
 
   const data = validatedData.data;
   data.projectId =
-    formData.projectId === __SWOLO_NONE ? null : formData.projectId;
+    formData.projectId === __SWOLO_NONE_SELECTED ? null : formData.projectId;
 
   try {
     if (updating) {
@@ -84,7 +134,7 @@ export const upsertTask = async (formData: TaskFormData, id?: string) => {
   revalidatePath('/tasks');
   revalidatePath('/projects');
 
-  if (data.projectId !== __SWOLO_NONE) {
+  if (data.projectId !== __SWOLO_NONE_SELECTED) {
     revalidatePath(`/projects/${data.projectId}`);
   }
   return { success: true };

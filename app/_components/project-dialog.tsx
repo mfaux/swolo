@@ -27,62 +27,58 @@ import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/hooks/use-toast';
 import {
   __SWOLO_NONE_SELECTED,
+  ProjectFormData,
+  projectFormSchema,
   ProjectWithLabels,
-  TaskFormData,
-  taskFormSchema,
-  TaskWithLabels,
 } from '@/shared/types';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   ArrowUp,
   CircleChevronLeft,
   CircleChevronRight,
-  ClipboardCheck,
+  FolderKanban,
   Tags,
   X,
 } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
-import { upsertTask } from './actions';
+import { upsertProject } from './actions';
 
-type TaskDialogProps = {
-  task?: TaskWithLabels;
+type ProjectDialogProps = {
+  project?: ProjectWithLabels;
   projects: ProjectWithLabels[];
   isOpen?: boolean;
   onClose: () => void;
 };
 
-export default function TaskDialog({
-  task,
+export default function ProjectDialog({
+  project,
   projects,
   isOpen = true,
   onClose,
-}: TaskDialogProps) {
+}: ProjectDialogProps) {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
   const { toast } = useToast();
 
-  // const [labels, setLabels] = useState<string[]>([]);
-
-  const form = useForm<TaskFormData>({
+  const form = useForm<ProjectFormData>({
     mode: 'onSubmit',
-    resolver: zodResolver(taskFormSchema),
+    resolver: zodResolver(projectFormSchema),
     defaultValues: {
-      title: task?.title ?? '',
-      description: task?.description ?? '',
-      status: task?.status ?? '',
-      projectId: task?.projectId ?? __SWOLO_NONE_SELECTED,
+      name: project?.name ?? '',
+      description: project?.description ?? '',
+      parentId: project?.parentId ?? __SWOLO_NONE_SELECTED,
     },
   });
 
-  const onSubmit = async (data: TaskFormData) => {
-    const res = await upsertTask(data, task?.id);
+  const onSubmit = async (data: ProjectFormData) => {
+    const res = await upsertProject(data, project?.id);
 
     if (res?.success) {
       onClose();
     } else if (res?.fieldErrors) {
       for (const key in res.fieldErrors) {
-        form.setError(key as keyof TaskFormData, {
-          message: res.fieldErrors[key as keyof TaskFormData]?.join(', '),
+        form.setError(key as keyof ProjectFormData, {
+          message: res.fieldErrors[key as keyof ProjectFormData]?.join(', '),
         });
       }
     } else if (res?.error) {
@@ -95,7 +91,7 @@ export default function TaskDialog({
 
   const togglePanel = () => setIsPanelOpen(!isPanelOpen);
 
-  const labelBadges = task?.labels?.map((label, index) => (
+  const labelBadges = project?.labels?.map((label, index) => (
     <Badge key={index} variant="secondary">
       {label.name}
     </Badge>
@@ -112,8 +108,8 @@ export default function TaskDialog({
       <DialogContent className="sm:max-w-[900px]" showClose={false}>
         <DialogHeader className="flex flex-row items-center justify-between">
           <DialogTitle className="flex flex-row items-center gap-1">
-            <ClipboardCheck />
-            {!task ? 'New Task' : 'Edit Task'}
+            <FolderKanban />
+            {!project ? 'New Project' : 'Edit Project'}
           </DialogTitle>
           <div className="flex items-center">
             <Button variant="ghost" size="icon" onClick={togglePanel}>
@@ -134,11 +130,11 @@ export default function TaskDialog({
                   <div className="space-y-2">
                     <FormField
                       control={form.control}
-                      name="title"
+                      name="name"
                       render={({ field }) => (
                         <FormItem>
                           <FormControl>
-                            <Input placeholder="Enter a title" {...field} />
+                            <Input placeholder="Enter a name" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -181,10 +177,10 @@ export default function TaskDialog({
                   <div className="space-y-2">
                     <FormField
                       control={form.control}
-                      name={'projectId'}
+                      name={'parentId'}
                       render={({ field }) => (
                         <FormItem>
-                          <Label htmlFor="project">Project</Label>
+                          <Label htmlFor="project">Parent project</Label>
 
                           <Select
                             onValueChange={field.onChange}
@@ -192,7 +188,7 @@ export default function TaskDialog({
                           >
                             <FormControl>
                               <SelectTrigger id="project">
-                                <SelectValue placeholder="(No project)" />
+                                <SelectValue placeholder="(No parent project)" />
                               </SelectTrigger>
                             </FormControl>
                             <SelectContent>
@@ -210,33 +206,16 @@ export default function TaskDialog({
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="status">Status</Label>
-                    <Select>
-                      <SelectTrigger id="status">
-                        <SelectValue placeholder="Select status" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="todo">To Do</SelectItem>
-                        <SelectItem value="inprogress">In Progress</SelectItem>
-                        <SelectItem value="done">Done</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="dueDate">Due Date</Label>
-                    <Input id="dueDate" type="date" />
-                  </div>
-                  <div className="space-y-2">
                     <Label>Created At</Label>
                     <p className="text-sm text-gray-500">
-                      <span>{task?.createdAt?.toLocaleString()} </span>
+                      <span>{project?.createdAt?.toLocaleString()} </span>
                     </p>
                   </div>
                   <div className="space-y-2">
                     <Label>Updated At</Label>
                     <p className="text-sm text-gray-500">
                       <span>
-                        {task?.updatedAt?.toLocaleString() ??
+                        {project?.updatedAt?.toLocaleString() ??
                           'No updates since creation'}
                       </span>
                     </p>

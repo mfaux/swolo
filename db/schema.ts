@@ -14,7 +14,6 @@ import { createInsertSchema } from 'drizzle-zod';
 
 const cuidLength = getConstants().bigLength;
 const createId = init({ length: cuidLength });
-
 const userIdLength = 191;
 
 // Users table (synced with Clerk)
