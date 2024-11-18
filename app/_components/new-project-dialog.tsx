@@ -71,6 +71,7 @@ const NewProjectDialog = ({
             <FolderKanban />
             New Project
           </DialogTitle>
+          <DialogDescription />
         </DialogHeader>
         <form onSubmit={handleSubmit}>
           <div className="pt-1 flex items-center space-x-2 gap-1">
