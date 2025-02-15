@@ -51,7 +51,7 @@
     "react-dom": "^19.0.0-rc-69d4b800-20241021",
     "react-dropzone": "^14.3.5",
     "react-hook-form": "^7.53.2",
-    "tailwind-merge": "^2.5.4",
+    "tailwind-merge": "^3.0.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
