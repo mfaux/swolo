@@ -15,7 +15,7 @@
     "db:reset": "docker compose down && (docker volume rm swolo_db || true) && docker compose up -d && docker compose run --rm wait-for-it && pnpm db:migrate && pnpm db:seed"
   },
   "dependencies": {
-    "@hookform/resolvers": "^3.9.1",
+    "@hookform/resolvers": "^4.0.0",
     "@paralleldrive/cuid2": "^2.2.2",
     "@radix-ui/react-avatar": "^1.1.1",
     "@radix-ui/react-collapsible": "^1.1.1",
