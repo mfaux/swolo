@@ -1,6 +1,6 @@
 'use server';
 
-import { db } from '@/db/drizzle';
+import { db } from '@/db';
 import { projects, tasks } from '@/db/schema';
 import {
   __SWOLO_NONE_SELECTED,
@@ -64,7 +64,7 @@ export const upsertProject = async (formData: ProjectFormData, id?: string) => {
 
   const data = validatedData.data;
   data.parentId =
-    formData.parentId === __SWOLO_NONE_SELECTED ? null : formData.parentId;
+    formData.parentId === __SWOLO_NONE_SELECTED ? undefined : formData.parentId;
 
   try {
     if (updating) {
@@ -108,7 +108,9 @@ export const upsertTask = async (formData: TaskFormData, id?: string) => {
 
   const data = validatedData.data;
   data.projectId =
-    formData.projectId === __SWOLO_NONE_SELECTED ? null : formData.projectId;
+    formData.projectId === __SWOLO_NONE_SELECTED
+      ? undefined
+      : formData.projectId;
 
   try {
     if (updating) {

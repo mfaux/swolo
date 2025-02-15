@@ -1,14 +1,15 @@
 import { getConstants, init } from '@paralleldrive/cuid2';
 import {
   AnyPgColumn,
-  pgTable,
   primaryKey,
+  pgTable as table,
   text,
   timestamp,
   varchar,
 } from 'drizzle-orm/pg-core';
 import { relations } from 'drizzle-orm/relations';
 import { createInsertSchema } from 'drizzle-zod';
+import { z } from 'zod';
 
 // TODO: move defaults like createId to actions?
 
@@ -16,18 +17,18 @@ const cuidLength = getConstants().bigLength;
 const createId = init({ length: cuidLength });
 const userIdLength = 191;
 
-// Users table (synced with Clerk)
-export const users = pgTable('users', {
+// Users table (to be synced with Clerk)
+export const users = table('users', {
   id: varchar({ length: cuidLength })
     .$defaultFn(() => createId())
     .primaryKey(),
-  // Clerk handles email, name, and other user profile data
+  // Clerk will handle email, name, and other user profile data. NYI
   createdAt: timestamp().defaultNow().notNull(),
   updatedAt: timestamp().defaultNow().notNull(),
 });
 
 // Projects table
-export const projects = pgTable(
+export const projects = table(
   'projects',
   {
     id: varchar({ length: cuidLength })
@@ -48,17 +49,25 @@ export const projects = pgTable(
   (table) => [primaryKey({ columns: [table.id, table.name, table.userId] })],
 );
 
-// Schema for inserting a project - can be used to validate API requests
+// Schema for inserting a project - can be used to validate API requests.
+// Reach hook form doesn't like nulls, so we exclude them from the schema.
 export const insertProjectSchema = createInsertSchema(projects, {
   name: (schema) =>
-    schema.name
+    schema
       .trim()
       .min(1, 'Name cannot be empty')
       .max(100, 'Maximum 100 characters'),
+}).extend({
+  description: z
+    .string()
+    .trim()
+    .max(1000, 'Maximum 1000 characters')
+    .optional(),
+  parentId: z.string().optional(),
 });
 
 // Tasks table
-export const tasks = pgTable(
+export const tasks = table(
   'tasks',
   {
     id: varchar({ length: cuidLength })
@@ -82,11 +91,19 @@ export const tasks = pgTable(
 // Schema for inserting a task - can be used to validate API requests
 export const insertTaskSchema = createInsertSchema(tasks, {
   title: (schema) =>
-    schema.title.trim().max(100, { message: 'Maximum 100 characters' }),
+    schema.trim().max(100, { message: 'Maximum 100 characters' }),
+}).extend({
+  description: z
+    .string()
+    .trim()
+    .max(1000, 'Maximum 1000 characters')
+    .optional(),
+  dueDate: z.date().optional(),
+  projectId: z.string().optional(),
 });
 
 // Labels table
-export const labels = pgTable(
+export const labels = table(
   'labels',
   {
     id: varchar({ length: cuidLength })
@@ -102,7 +119,7 @@ export const labels = pgTable(
 );
 
 // Task-Label join table
-export const taskLabels = pgTable(
+export const taskLabels = table(
   'task_labels',
   {
     taskId: varchar()
@@ -118,7 +135,7 @@ export const taskLabels = pgTable(
 export const insertTaskLabelsSchema = createInsertSchema(taskLabels);
 
 // Project-Label join table
-export const projectLabels = pgTable(
+export const projectLabels = table(
   'project_labels',
   {
     projectId: varchar()
