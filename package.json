@@ -58,7 +58,7 @@
     "@types/node": "^22.9.0",
     "@types/pg": "^8.11.10",
     "@types/react": "npm:types-react@19.0.0-rc.1",
-    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
+    "@types/react-dom": "npm:types-react-dom@19.0.0",
     "autoprefixer": "^10.4.20",
     "dotenv": "^16.4.5",
     "drizzle-kit": "^0.28.1",
@@ -74,7 +74,7 @@
   "pnpm": {
     "overrides": {
       "@types/react": "npm:types-react@19.0.0-rc.1",
-      "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
+      "@types/react-dom": "npm:types-react-dom@19.0.0"
     }
   }
 }
