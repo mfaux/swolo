@@ -34,6 +34,7 @@
     "@radix-ui/react-tooltip": "^1.1.4",
     "@radix-ui/react-visually-hidden": "^1.1.0",
     "@strozw/use-action-state-compat": "^0.1.10",
+    "@tailwindcss/postcss": "^4.0.6",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.4",
