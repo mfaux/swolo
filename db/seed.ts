@@ -1,5 +1,5 @@
 import { getConstants, init } from '@paralleldrive/cuid2';
-import { db } from './drizzle';
+import { db } from '.';
 import {
   labels,
   projectLabels,

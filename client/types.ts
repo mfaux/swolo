@@ -1,10 +1,6 @@
 import { insertTaskSchema, labels, projects, tasks } from '@/db/schema';
 import { z } from 'zod';
 
-// export const insertProjectSchema = createInsertSchema(projects, {
-//   name: (schema) => schema.name.trim().min(1).max(100),
-// });
-
 export const taskFormSchema = insertTaskSchema.omit({
   id: true,
   userId: true,
