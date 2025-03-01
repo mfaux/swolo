@@ -1,11 +1,12 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
   "extends": ["config:recommended", ":dependencyDashboard"],
+  "separateMinorPatch": true,
   "packageRules": [
     {
-      "matchUpdateTypes": ["patch", "pin", "digest"],
-      "automerge": true,
-      "groupName": "patch-pin-digest"
+      "matchUpdateTypes": ["patch"],
+      "groupName": "all patch updates",
+      "automerge": true
     }
   ],
   "platformAutomerge": true
