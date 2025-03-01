@@ -1,30 +1,29 @@
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/shadcn/badge';
+import { Button } from '@/components/ui/shadcn/button';
 import {
   Dialog,
   DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
+} from '@/components/ui/shadcn/dialog';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+} from '@/components/ui/shadcn/form';
+import { Input } from '@/components/ui/shadcn/input';
+import { Label } from '@/components/ui/shadcn/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
-import { useToast } from '@/hooks/use-toast';
+} from '@/components/ui/shadcn/select';
+import { Textarea } from '@/components/ui/shadcn/textarea';
 import {
   __SWOLO_NONE_SELECTED,
   ProjectWithLabels,
@@ -43,6 +42,7 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { upsertTask } from './actions';
 
 type TaskDialogProps = {
@@ -59,7 +59,6 @@ export default function TaskDialog({
   onClose,
 }: TaskDialogProps) {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
-  const { toast } = useToast();
 
   // const [labels, setLabels] = useState<string[]>([]);
 
@@ -86,8 +85,7 @@ export default function TaskDialog({
         });
       }
     } else if (res?.error) {
-      toast({
-        title: 'An error occurred',
+      toast('An error occurred', {
         description: res.error,
       });
     }

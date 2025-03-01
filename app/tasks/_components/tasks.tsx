@@ -1,19 +1,24 @@
 'use client';
 
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/shadcn/badge';
+import { Button } from '@/components/ui/shadcn/button';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/shadcn/card';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { useToast } from '@/hooks/use-toast';
+} from '@/components/ui/shadcn/dropdown-menu';
+import { ScrollArea } from '@/components/ui/shadcn/scroll-area';
 import { ProjectWithLabels, TaskWithLabels } from '@/shared/types';
 import { MoreHorizontal, Trash2 } from 'lucide-react';
 import { useState } from 'react';
+import { toast } from 'sonner';
 import TaskDialog from '../../_components/task-dialog';
 import { deleteTask } from '../actions';
 
@@ -59,13 +64,11 @@ type TaskCardProps = {
 };
 
 const TaskCard = ({ task, onTaskSelected }: TaskCardProps) => {
-  const { toast } = useToast();
   const onDelete = async () => {
     const res = await deleteTask(task.id);
 
     if (res?.error) {
-      toast({
-        title: 'An error occurred',
+      toast('An error occurred', {
         description: res.error,
       });
     }

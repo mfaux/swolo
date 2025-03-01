@@ -1,30 +1,29 @@
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
+import { Badge } from '@/components/ui/shadcn/badge';
+import { Button } from '@/components/ui/shadcn/button';
 import {
   Dialog,
   DialogClose,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
+} from '@/components/ui/shadcn/dialog';
 import {
   Form,
   FormControl,
   FormField,
   FormItem,
   FormMessage,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+} from '@/components/ui/shadcn/form';
+import { Input } from '@/components/ui/shadcn/input';
+import { Label } from '@/components/ui/shadcn/label';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
-import { Textarea } from '@/components/ui/textarea';
-import { useToast } from '@/hooks/use-toast';
+} from '@/components/ui/shadcn/select';
+import { Textarea } from '@/components/ui/shadcn/textarea';
 import {
   __SWOLO_NONE_SELECTED,
   ProjectFormData,
@@ -42,6 +41,7 @@ import {
 } from 'lucide-react';
 import { useState } from 'react';
 import { useForm } from 'react-hook-form';
+import { toast } from 'sonner';
 import { upsertProject } from './actions';
 
 type ProjectDialogProps = {
@@ -58,7 +58,6 @@ export default function ProjectDialog({
   onClose,
 }: ProjectDialogProps) {
   const [isPanelOpen, setIsPanelOpen] = useState(false);
-  const { toast } = useToast();
 
   const form = useForm<ProjectFormData>({
     mode: 'onSubmit',
@@ -82,8 +81,7 @@ export default function ProjectDialog({
         });
       }
     } else if (res?.error) {
-      toast({
-        title: 'An error occurred',
+      toast('An error occurred', {
         description: res.error,
       });
     }

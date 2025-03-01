@@ -6,21 +6,21 @@ import {
   DialogDescription,
   DialogHeader,
   DialogTitle,
-} from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
+} from '@/components/ui/shadcn/dialog';
+import { Input } from '@/components/ui/shadcn/input';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from '@/components/ui/select';
+} from '@/components/ui/shadcn/select';
 import { SubmitButton } from '@/components/ui/submit-button';
-import { useToast } from '@/hooks/use-toast';
 import { ProjectWithLabels } from '@/shared/types';
 import * as VisuallyHidden from '@radix-ui/react-visually-hidden';
 import { FolderKanban } from 'lucide-react';
 import { useFormStatus } from 'react-dom';
+import { toast } from 'sonner';
 import { createProject } from './actions';
 
 type NewProjectDialogProps = {
@@ -35,7 +35,6 @@ const NewProjectDialog = ({
   onOpenChange,
 }: NewProjectDialogProps) => {
   const status = useFormStatus();
-  const { toast } = useToast();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -46,8 +45,7 @@ const NewProjectDialog = ({
       onOpenChange();
     } else {
       if (res?.error) {
-        toast({
-          title: 'An error occurred',
+        toast('An error occurred', {
           description: res.error,
         });
       }

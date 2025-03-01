@@ -1,22 +1,27 @@
 'use client';
 
 import ProjectDialog from '@/app/_components/project-dialog';
-import { Badge } from '@/components/ui/badge';
-import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import { Badge } from '@/components/ui/shadcn/badge';
+import { Button } from '@/components/ui/shadcn/button';
+import {
+  Card,
+  CardContent,
+  CardHeader,
+  CardTitle,
+} from '@/components/ui/shadcn/card';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { ScrollArea } from '@/components/ui/scroll-area';
-import { useToast } from '@/hooks/use-toast';
+} from '@/components/ui/shadcn/dropdown-menu';
+import { ScrollArea } from '@/components/ui/shadcn/scroll-area';
 import { ProjectWithLabels } from '@/shared/types';
 import { ClipboardCheck, MoreHorizontal, Trash2 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import { toast } from 'sonner';
 import { deleteProject } from '../actions';
 
 type ProjectsProps = {
@@ -61,13 +66,11 @@ type ProjectCardProps = {
 
 const ProjectCard = ({ project, onProjectSelected }: ProjectCardProps) => {
   const router = useRouter();
-  const { toast } = useToast();
   const onDelete = async () => {
     const res = await deleteProject(project.id);
 
     if (res?.error) {
-      toast({
-        title: 'An error occurred',
+      toast('An error occurred', {
         description: res.error,
       });
     }

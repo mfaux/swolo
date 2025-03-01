@@ -1,6 +1,6 @@
+import { SidebarInset, SidebarProvider } from '@/components/ui/shadcn/sidebar';
+import { Toaster } from '@/components/ui/shadcn/sonner';
 import { HeaderBar } from '@/components/ui/shell/header-bar';
-import { SidebarInset, SidebarProvider } from '@/components/ui/sidebar';
-import { Toaster } from '@/components/ui/toaster';
 import { getProjects } from '@/db/queries';
 import { fontSans } from '@/lib/fonts';
 import { AppSidebar } from './_components/app-sidebar/app-sidebar';

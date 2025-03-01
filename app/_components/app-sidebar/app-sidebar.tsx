@@ -11,7 +11,7 @@ import {
   SidebarMenuButton,
   SidebarRail,
   useSidebar,
-} from '@/components/ui/sidebar';
+} from '@/components/ui/shadcn/sidebar';
 import { SVGIcon } from '@/components/ui/svg-icon';
 import Link from 'next/link';
 import { NavCapture } from './nav-capture';

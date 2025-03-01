@@ -1,13 +1,13 @@
 'use client';
 
-import { Input } from '@/components/ui/input';
+import { Input } from '@/components/ui/shadcn/input';
 import {
   Menubar,
   MenubarContent,
   MenubarItem,
   MenubarMenu,
   MenubarTrigger,
-} from '@/components/ui/menubar';
+} from '@/components/ui/shadcn/menubar';
 import { Plus, Search } from 'lucide-react';
 
 import { ProjectWithLabels } from '@/shared/types';
