@@ -1,9 +1,10 @@
 'use client';
 
 import { ArrowUp } from 'lucide-react';
-import { Button, ButtonProps } from './button';
+import { ComponentProps } from 'react';
+import { Button } from './shadcn/button';
 
-type SubmitButtonProps = ButtonProps & { isPending: boolean };
+type SubmitButtonProps = ComponentProps<typeof Button> & { isPending: boolean };
 
 const SubmitButton = ({ isPending, ...rest }: SubmitButtonProps) => {
   return (
