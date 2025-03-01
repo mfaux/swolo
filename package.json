@@ -9,10 +9,9 @@
     "start": "next start",
     "lint": "next lint",
     "db:seed": "pnpx tsx db/seed.ts",
-    "db:generate": "drizzle-kit generate",
-    "db:migrate": "npx tsx db/migrate.ts",
+    "db:push": "drizzle-kit push",
     "db:studio": "drizzle-kit studio",
-    "db:reset": "docker compose down && (docker volume rm swolo_db || true) && docker compose up -d && docker compose run --rm wait-for-it && pnpm db:migrate && pnpm db:seed"
+    "db:reset": "docker compose down && (docker volume rm swolo_db || true) && docker compose up -d && docker compose run --rm wait-for-it && pnpm db:push && pnpm db:seed"
   },
   "dependencies": {
     "@hookform/resolvers": "^4.1.2",
