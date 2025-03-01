@@ -54,7 +54,7 @@ Feel free to change the database settings in the `.env` and `docker-compose.yaml
 Then, initialize the database and seed it with some tasks and projects:
 
 ```bash
-pnpm db:migrate
+pnpm db:push
 pnpm db:seed
 ```
 
@@ -64,14 +64,32 @@ Finally, run the Next.js development server:
 pnpm dev
 ```
 
-> [!NOTE]  
-> While Swolo is in alpha, the db will contain a single migration and seed file
-> for rapid development. After changing the schema, you will need to reinitialize
-> the database (causing all data to be lost):
->
-> ```
-> pnpm db:reset
-> ```
+## Schema changes
+
+While Swolo is in alpha, we won’t use database migrations. Instead, apply schema changes directly to the
+database using:
+
+```bash
+pnpm db:push
+```
+
+This trade-off prioritizes rapid development over schema versioning.
+
+You can reinitialize the database at any time (causing all data to be lost):
+
+```bash
+pnpm db:reset
+```
+
+## Shadcn integration
+
+Swolo uses the `canary` version of the [shadcn/ui](https://ui.shadcn.com/) library for its UI components.
+
+To add a component, run:
+
+```bash
+pnpm dlx shadcn@canary add <COMPONENT_NAME>
+```
 
 ## Contributing
 
