@@ -58,6 +58,9 @@ export const projectLabels = table(
     labelId: varchar()
       .references(() => labels.id, { onDelete: 'cascade' })
       .notNull(),
+    userId: varchar({ length: cuidLength })
+      .references(() => users.id, { onDelete: 'cascade' })
+      .notNull(),
   },
 
   (table) => [primaryKey({ columns: [table.projectId, table.labelId] })],
