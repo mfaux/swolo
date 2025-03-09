@@ -1,7 +1,9 @@
 import { relations } from 'drizzle-orm/relations';
 import { labels } from './labels';
-import { projectLabels, projects } from './projects';
-import { taskLabels, tasks } from './tasks';
+import { projects } from './projects';
+import { projectsToLabels } from './projects-to-labels';
+import { tasks } from './tasks';
+import { tasksToLabels } from './tasks-to-labels';
 import { users } from './users';
 
 export const usersRelations = relations(users, ({ many }) => ({
@@ -18,7 +20,7 @@ export const projectsRelations = relations(projects, ({ many, one }) => ({
     references: [projects.id],
     relationName: 'parentChild',
   }),
-  labels: many(projectLabels),
+  labels: many(projectsToLabels),
   user: one(users, {
     fields: [projects.userId],
     references: [users.id],
@@ -30,7 +32,7 @@ export const tasksRelations = relations(tasks, ({ one, many }) => ({
     fields: [tasks.projectId],
     references: [projects.id],
   }),
-  labels: many(taskLabels),
+  labels: many(tasksToLabels),
   user: one(users, {
     fields: [tasks.userId],
     references: [users.id],
@@ -38,32 +40,35 @@ export const tasksRelations = relations(tasks, ({ one, many }) => ({
 }));
 
 export const labelsRelations = relations(labels, ({ many, one }) => ({
-  tasks: many(taskLabels),
-  projects: many(projectLabels),
+  tasks: many(tasksToLabels),
+  projects: many(projectsToLabels),
   user: one(users, {
     fields: [labels.userId],
     references: [users.id],
   }),
 }));
 
-export const taskLabelsRelations = relations(taskLabels, ({ one }) => ({
+export const tasksToLabelsRelations = relations(tasksToLabels, ({ one }) => ({
   task: one(tasks, {
-    fields: [taskLabels.taskId],
+    fields: [tasksToLabels.taskId],
     references: [tasks.id],
   }),
   label: one(labels, {
-    fields: [taskLabels.labelId],
+    fields: [tasksToLabels.labelId],
     references: [labels.id],
   }),
 }));
 
-export const projectLabelsRelations = relations(projectLabels, ({ one }) => ({
-  project: one(projects, {
-    fields: [projectLabels.projectId],
-    references: [projects.id],
+export const projectLabelsRelations = relations(
+  projectsToLabels,
+  ({ one }) => ({
+    project: one(projects, {
+      fields: [projectsToLabels.projectId],
+      references: [projects.id],
+    }),
+    label: one(labels, {
+      fields: [projectsToLabels.labelId],
+      references: [labels.id],
+    }),
   }),
-  label: one(labels, {
-    fields: [projectLabels.labelId],
-    references: [labels.id],
-  }),
-}));
+);

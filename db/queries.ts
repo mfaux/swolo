@@ -4,8 +4,10 @@ import { aliasedTable, and, eq, sql } from 'drizzle-orm';
 import { db } from '.';
 import { ProjectWithLabels, TaskWithLabels } from '../shared/types';
 import { labels } from './schema/labels';
-import { projectLabels, projects } from './schema/projects';
-import { taskLabels, tasks } from './schema/tasks';
+import { projects } from './schema/projects';
+import { projectsToLabels } from './schema/projects-to-labels';
+import { tasks } from './schema/tasks';
+import { tasksToLabels } from './schema/tasks-to-labels';
 
 const parentProject = aliasedTable(projects, 'parent');
 
@@ -54,8 +56,8 @@ export const getTasks = async (
     })
     .from(tasks)
     .leftJoin(parentProject, eq(tasks.projectId, parentProject.id))
-    .leftJoin(taskLabels, eq(tasks.id, taskLabels.taskId))
-    .leftJoin(labels, eq(taskLabels.labelId, labels.id))
+    .leftJoin(tasksToLabels, eq(tasks.id, tasksToLabels.taskId))
+    .leftJoin(labels, eq(tasksToLabels.labelId, labels.id))
     .limit(limit)
     .offset(offset)
     .where(
@@ -118,8 +120,8 @@ export const getProjects = async (
     })
     .from(projects)
     .leftJoin(parentProject, eq(projects.parentId, parentProject.id))
-    .leftJoin(projectLabels, eq(projects.id, projectLabels.projectId))
-    .leftJoin(labels, eq(projectLabels.labelId, labels.id))
+    .leftJoin(projectsToLabels, eq(projects.id, projectsToLabels.projectId))
+    .leftJoin(labels, eq(projectsToLabels.labelId, labels.id))
     .limit(limit)
     .offset(offset)
     .where(
