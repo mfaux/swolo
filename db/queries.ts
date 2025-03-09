@@ -12,7 +12,7 @@ import { tasksToLabels } from './schema/tasks-to-labels';
 const parentProject = aliasedTable(projects, 'parent');
 
 type GetTasksParams = {
-  userId: string;
+  workspaceId: string;
   projectId?: string;
 } & (
   | {}
@@ -46,10 +46,18 @@ export const getTasks = async (
       status: tasks.status,
       projectId: tasks.projectId,
       projectName: parentProject.name,
-      labels: sql<{ id: string; name: string; color: string }[]>`
+      labels: sql<
+        {
+          id: string;
+          name: string;
+          color: string;
+          createdAt: Date;
+          updatedAt: Date;
+        }[]
+      >`
         CASE 
           WHEN COUNT(labels.id) > 0 THEN JSON_AGG(
-            json_build_object('id', ${labels.id}, 'name', ${labels.name}, 'color', ${labels.color})
+            json_build_object('id', ${labels.id}, 'name', ${labels.name}, 'color', ${labels.color}, 'createdAt', ${labels.createdAt}, 'updatedAt', ${labels.updatedAt}) 
           )
           ELSE NULL
         END`.as('labels'),
@@ -62,7 +70,7 @@ export const getTasks = async (
     .offset(offset)
     .where(
       and(
-        eq(tasks.userId, params.userId),
+        eq(tasks.workspaceId, params.workspaceId),
         params.projectId ? eq(tasks.projectId, params.projectId) : undefined,
       ),
     )
@@ -80,7 +88,7 @@ export const getTasks = async (
 };
 
 type GetProjectsParams = {
-  userId: string;
+  workspaceId: string;
   projectId?: string;
 } & (
   | {}
@@ -119,14 +127,14 @@ export const getProjects = async (
         END`.as('labels'),
     })
     .from(projects)
-    .leftJoin(parentProject, eq(projects.parentId, parentProject.id))
+    .leftJoin(parentProject, eq(projects.parentProjectId, parentProject.id))
     .leftJoin(projectsToLabels, eq(projects.id, projectsToLabels.projectId))
     .leftJoin(labels, eq(projectsToLabels.labelId, labels.id))
     .limit(limit)
     .offset(offset)
     .where(
       and(
-        eq(projects.userId, params.userId),
+        eq(projects.workspaceId, params.workspaceId),
         params.projectId ? eq(projects.id, params.projectId) : undefined,
       ),
     )

@@ -1,17 +1,17 @@
 import { pgTable as table, text, varchar } from 'drizzle-orm/pg-core';
-
+import { users } from './users';
 import { createId, cuidLength, timestamps } from './utils';
-import { workspaces } from './workspaces';
 
-export const labels = table('labels', {
+// Workspace table
+export const workspaces = table('workspaces', {
   id: varchar({ length: cuidLength })
     .$defaultFn(() => createId())
     .unique()
+    .notNull()
     .primaryKey(),
   name: text().notNull(),
-  color: text(),
-  workspaceId: varchar({ length: cuidLength })
-    .references(() => workspaces.id, { onDelete: 'cascade' })
+  userId: varchar({ length: cuidLength })
+    .references(() => users.id, { onDelete: 'cascade' })
     .notNull(),
   ...timestamps,
 });

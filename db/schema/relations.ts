@@ -5,47 +5,56 @@ import { projectsToLabels } from './projects-to-labels';
 import { tasks } from './tasks';
 import { tasksToLabels } from './tasks-to-labels';
 import { users } from './users';
+import { workspaces } from './workspaces';
 
 export const usersRelations = relations(users, ({ many }) => ({
+  workspaces: many(workspaces),
+}));
+
+export const workspacesRelations = relations(workspaces, ({ one, many }) => ({
+  user: one(users, { fields: [workspaces.userId], references: [users.id] }),
   projects: many(projects),
   tasks: many(tasks),
   labels: many(labels),
 }));
 
-export const projectsRelations = relations(projects, ({ many, one }) => ({
-  tasks: many(tasks),
+// Unsure whey, but the relationName needed to be the same for the parent and child projects.
+// Otherwise, drizzle studio wouldn't work. Found a Stack Overflow post that
+// showed the soultion but didn't explain why.
+export const projectsRelations = relations(projects, ({ one, many }) => ({
+  workspace: one(workspaces, {
+    fields: [projects.workspaceId],
+    references: [workspaces.id],
+  }),
   childProjects: many(projects, { relationName: 'parentChild' }),
   parentProject: one(projects, {
-    fields: [projects.parentId],
+    fields: [projects.parentProjectId],
     references: [projects.id],
     relationName: 'parentChild',
   }),
+  tasks: many(tasks),
   labels: many(projectsToLabels),
-  user: one(users, {
-    fields: [projects.userId],
-    references: [users.id],
-  }),
 }));
 
 export const tasksRelations = relations(tasks, ({ one, many }) => ({
+  workspace: one(workspaces, {
+    fields: [tasks.workspaceId],
+    references: [workspaces.id],
+  }),
   project: one(projects, {
     fields: [tasks.projectId],
     references: [projects.id],
   }),
   labels: many(tasksToLabels),
-  user: one(users, {
-    fields: [tasks.userId],
-    references: [users.id],
-  }),
 }));
 
 export const labelsRelations = relations(labels, ({ many, one }) => ({
-  tasks: many(tasksToLabels),
-  projects: many(projectsToLabels),
-  user: one(users, {
-    fields: [labels.userId],
-    references: [users.id],
+  workspace: one(workspaces, {
+    fields: [labels.workspaceId],
+    references: [workspaces.id],
   }),
+  projects: many(projectsToLabels),
+  tasks: many(tasksToLabels),
 }));
 
 export const tasksToLabelsRelations = relations(tasksToLabels, ({ one }) => ({

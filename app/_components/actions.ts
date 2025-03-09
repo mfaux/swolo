@@ -14,7 +14,7 @@ import { eq } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 
-const userId = 'fox';
+const workspaceId = 'work';
 
 export const createProject = async (formData: FormData) => {
   let rawFormData = {
@@ -29,7 +29,7 @@ export const createProject = async (formData: FormData) => {
 
     await db.insert(projects).values({
       name: projectName as string,
-      userId: userId,
+      workspaceId,
     });
 
     revalidatePath('/');
@@ -60,8 +60,10 @@ export const upsertProject = async (formData: ProjectFormData, id?: string) => {
   }
 
   const data = validatedData.data;
-  data.parentId =
-    formData.parentId === __SWOLO_NONE_SELECTED ? undefined : formData.parentId;
+  data.parentProjectId =
+    formData.parentProjectId === __SWOLO_NONE_SELECTED
+      ? undefined
+      : formData.parentProjectId;
 
   try {
     if (updating) {
@@ -69,7 +71,7 @@ export const upsertProject = async (formData: ProjectFormData, id?: string) => {
     } else {
       await db.insert(projects).values({
         ...data,
-        userId,
+        workspaceId,
       });
     }
   } catch (e) {
@@ -81,8 +83,8 @@ export const upsertProject = async (formData: ProjectFormData, id?: string) => {
 
   revalidatePath('/projects');
 
-  if (data.parentId !== __SWOLO_NONE_SELECTED) {
-    revalidatePath(`/projects/${data.parentId}`);
+  if (data.parentProjectId !== __SWOLO_NONE_SELECTED) {
+    revalidatePath(`/projects/${data.parentProjectId}`);
   }
   return { success: true };
 };
@@ -110,7 +112,7 @@ export const upsertTask = async (formData: TaskFormData, id?: string) => {
     } else {
       await db.insert(tasks).values({
         ...data,
-        userId,
+        workspaceId,
       });
     }
   } catch (e) {

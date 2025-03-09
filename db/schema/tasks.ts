@@ -1,5 +1,4 @@
 import {
-  primaryKey,
   pgTable as table,
   text,
   timestamp,
@@ -8,28 +7,25 @@ import {
 import { createInsertSchema } from 'drizzle-zod';
 import { z } from 'zod';
 import { projects } from './projects';
-import { users } from './users';
 import { createId, cuidLength, timestamps } from './utils';
+import { workspaces } from './workspaces';
 
-export const tasks = table(
-  'tasks',
-  {
-    id: varchar({ length: cuidLength })
-      .$defaultFn(() => createId())
-      .unique()
-      .notNull(),
-    title: text().notNull(),
-    status: text().notNull().default('todo'),
-    description: text(),
-    dueDate: timestamp(),
-    ...timestamps,
-    projectId: varchar().references(() => projects.id, { onDelete: 'cascade' }),
-    userId: varchar({ length: cuidLength })
-      .references(() => users.id, { onDelete: 'cascade' })
-      .notNull(),
-  },
-  (table) => [primaryKey({ columns: [table.id, table.title, table.userId] })],
-);
+export const tasks = table('tasks', {
+  id: varchar({ length: cuidLength })
+    .$defaultFn(() => createId())
+    .unique()
+    .notNull()
+    .primaryKey(),
+  title: text().notNull(),
+  status: text().notNull().default('todo'),
+  description: text(),
+  dueDate: timestamp(),
+  ...timestamps,
+  projectId: varchar().references(() => projects.id, { onDelete: 'cascade' }),
+  workspaceId: varchar({ length: cuidLength })
+    .references(() => workspaces.id, { onDelete: 'cascade' })
+    .notNull(),
+});
 
 // Schema for inserting a task - can be used to validate API requests
 export const insertTaskSchema = createInsertSchema(tasks, {

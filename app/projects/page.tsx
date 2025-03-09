@@ -3,7 +3,7 @@ import Projects from './_components/projects';
 
 export default async function ProjectsPage() {
   const projects = await getProjects({
-    userId: 'fox',
+    workspaceId: 'work',
   });
   return <Projects projects={projects} />;
 }
