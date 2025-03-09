@@ -1,13 +1,9 @@
 import { getConstants, init } from '@paralleldrive/cuid2';
 import { db } from '.';
-import {
-  labels,
-  projectLabels,
-  projects,
-  taskLabels,
-  tasks,
-  users,
-} from './schema';
+import { labels } from './schema/labels';
+import { projectLabels, projects } from './schema/projects';
+import { taskLabels, tasks } from './schema/tasks';
+import { users } from './schema/users';
 
 const cuidLength = getConstants().bigLength;
 const createId = init({ length: cuidLength });
@@ -33,8 +29,6 @@ async function seedUsers() {
   await db.insert(users).values([
     {
       id: 'fox',
-      createdAt: new Date(),
-      updatedAt: new Date(),
     },
   ]);
 }

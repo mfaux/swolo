@@ -1,4 +1,6 @@
-import { insertTaskSchema, labels, projects, tasks } from '@/db/schema';
+import { labels } from '@/db/schema/labels';
+import { projects } from '@/db/schema/projects';
+import { insertTaskSchema, tasks } from '@/db/schema/tasks';
 import { z } from 'zod';
 
 export const taskFormSchema = insertTaskSchema.omit({

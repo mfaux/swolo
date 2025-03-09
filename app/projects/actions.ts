@@ -1,6 +1,6 @@
 'use server';
 import { db } from '@/db';
-import { projects } from '@/db/schema';
+import { projects } from '@/db/schema/projects';
 import { eq } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 

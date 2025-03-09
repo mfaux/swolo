@@ -1,10 +1,6 @@
-import {
-  insertProjectSchema,
-  insertTaskSchema,
-  labels,
-  projects,
-  tasks,
-} from '@/db/schema';
+import { labels } from '@/db/schema/labels';
+import { insertProjectSchema, projects } from '@/db/schema/projects';
+import { insertTaskSchema, tasks } from '@/db/schema/tasks';
 import { z } from 'zod';
 
 // Used in forms to indicate when the user has selected the 'none' option (e.g., in a select dropdown)

@@ -1,7 +1,8 @@
 'use server';
 
 import { db } from '@/db';
-import { projects, tasks } from '@/db/schema';
+import { projects } from '@/db/schema/projects';
+import { tasks } from '@/db/schema/tasks';
 import {
   __SWOLO_NONE_SELECTED,
   ProjectFormData,
@@ -9,15 +10,11 @@ import {
   TaskFormData,
   taskFormSchema,
 } from '@/shared/types';
-import { getConstants, init } from '@paralleldrive/cuid2';
 import { eq } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 
 const userId = 'fox';
-
-const cuidLength = getConstants().bigLength;
-const createId = init({ length: cuidLength });
 
 export const createProject = async (formData: FormData) => {
   let rawFormData = {
@@ -68,16 +65,11 @@ export const upsertProject = async (formData: ProjectFormData, id?: string) => {
 
   try {
     if (updating) {
-      await db
-        .update(projects)
-        .set({ ...data, updatedAt: new Date() })
-        .where(eq(projects.id, id));
+      await db.update(projects).set(data).where(eq(projects.id, id));
     } else {
       await db.insert(projects).values({
-        id: createId(),
-        createdAt: new Date(),
         ...data,
-        userId: userId,
+        userId,
       });
     }
   } catch (e) {
@@ -114,16 +106,11 @@ export const upsertTask = async (formData: TaskFormData, id?: string) => {
 
   try {
     if (updating) {
-      await db
-        .update(tasks)
-        .set({ ...data, updatedAt: new Date() })
-        .where(eq(tasks.id, id));
+      await db.update(tasks).set(data).where(eq(tasks.id, id));
     } else {
       await db.insert(tasks).values({
-        id: createId(),
-        createdAt: new Date(),
         ...data,
-        userId: userId,
+        userId,
       });
     }
   } catch (e) {

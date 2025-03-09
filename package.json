@@ -10,7 +10,7 @@
     "lint": "next lint",
     "db:seed": "pnpx tsx db/seed.ts",
     "db:push": "drizzle-kit push",
-    "db:studio": "drizzle-kit studio",
+    "db:ui": "drizzle-kit studio",
     "db:reset": "docker compose down && (docker volume rm swolo_db || true) && docker compose up -d && docker compose run --rm wait-for-it && pnpm db:push && pnpm db:seed"
   },
   "dependencies": {
@@ -48,7 +48,7 @@
     "prettier": "^3.3.3",
     "prettier-plugin-organize-imports": "^4.1.0",
     "react": "^19.0.0-rc-69d4b800-20241021",
-    "react-day-picker": "^9.0.0",
+    "react-day-picker": "^8.10.1",
     "react-dom": "^19.0.0-rc-69d4b800-20241021",
     "react-dropzone": "^14.3.5",
     "react-hook-form": "^7.54.2",
