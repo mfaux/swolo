@@ -7,7 +7,6 @@ import {
 } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';
 import { z } from 'zod';
-import { labels } from './labels';
 import { users } from './users';
 import { createId, cuidLength, timestamps } from './utils';
 
@@ -47,21 +46,3 @@ export const insertProjectSchema = createInsertSchema(projects, {
     .optional(),
   parentId: z.string().optional(),
 });
-
-// Project-Label join table
-export const projectLabels = table(
-  'project_labels',
-  {
-    projectId: varchar()
-      .references(() => projects.id, { onDelete: 'cascade' })
-      .notNull(),
-    labelId: varchar()
-      .references(() => labels.id, { onDelete: 'cascade' })
-      .notNull(),
-    userId: varchar({ length: cuidLength })
-      .references(() => users.id, { onDelete: 'cascade' })
-      .notNull(),
-  },
-
-  (table) => [primaryKey({ columns: [table.projectId, table.labelId] })],
-);

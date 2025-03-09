@@ -1,8 +1,10 @@
 import { getConstants, init } from '@paralleldrive/cuid2';
 import { db } from '.';
 import { labels } from './schema/labels';
-import { projectLabels, projects } from './schema/projects';
-import { taskLabels, tasks } from './schema/tasks';
+import { projects } from './schema/projects';
+import { projectsToLabels } from './schema/projects-to-labels';
+import { tasks } from './schema/tasks';
+import { tasksToLabels } from './schema/tasks-to-labels';
 import { users } from './schema/users';
 
 const cuidLength = getConstants().bigLength;
@@ -60,7 +62,7 @@ async function seedProjects() {
     },
   ]);
 
-  await db.insert(projectLabels).values([
+  await db.insert(projectsToLabels).values([
     { projectId: 'swolo', labelId: labelHobby, userId: 'fox' },
     { projectId: 'swolo', labelId: labelDev, userId: 'fox' },
   ]);
@@ -121,7 +123,7 @@ async function seedTasks() {
     },
   ]);
 
-  await db.insert(taskLabels).values([
+  await db.insert(tasksToLabels).values([
     { taskId: myTask, labelId: labelFeat, userId: 'fox' },
     { taskId: designLayout, labelId: labelEnhancement, userId: 'fox' },
     { taskId: authModule, labelId: labelBug, userId: 'fox' },
