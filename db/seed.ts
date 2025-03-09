@@ -61,8 +61,8 @@ async function seedProjects() {
   ]);
 
   await db.insert(projectLabels).values([
-    { projectId: 'swolo', labelId: labelHobby },
-    { projectId: 'swolo', labelId: labelDev },
+    { projectId: 'swolo', labelId: labelHobby, userId: 'fox' },
+    { projectId: 'swolo', labelId: labelDev, userId: 'fox' },
   ]);
 }
 
@@ -122,13 +122,13 @@ async function seedTasks() {
   ]);
 
   await db.insert(taskLabels).values([
-    { taskId: myTask, labelId: labelFeat },
-    { taskId: designLayout, labelId: labelEnhancement },
-    { taskId: authModule, labelId: labelBug },
-    { taskId: setupDb, labelId: labelFeat },
-    { taskId: createApi, labelId: labelFeat },
-    { taskId: createApi, labelId: labelDev },
-    { taskId: frontend, labelId: labelDev },
+    { taskId: myTask, labelId: labelFeat, userId: 'fox' },
+    { taskId: designLayout, labelId: labelEnhancement, userId: 'fox' },
+    { taskId: authModule, labelId: labelBug, userId: 'fox' },
+    { taskId: setupDb, labelId: labelFeat, userId: 'fox' },
+    { taskId: createApi, labelId: labelFeat, userId: 'fox' },
+    { taskId: createApi, labelId: labelDev, userId: 'fox' },
+    { taskId: frontend, labelId: labelDev, userId: 'fox' },
   ]);
 }
 

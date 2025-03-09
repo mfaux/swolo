@@ -20,8 +20,8 @@ export const tasks = table(
       .unique()
       .notNull(),
     title: text().notNull(),
-    description: text(),
     status: text().notNull().default('todo'),
+    description: text(),
     dueDate: timestamp(),
     ...timestamps,
     projectId: varchar().references(() => projects.id, { onDelete: 'cascade' }),
@@ -55,6 +55,9 @@ export const taskLabels = table(
       .notNull(),
     labelId: varchar()
       .references(() => labels.id, { onDelete: 'cascade' })
+      .notNull(),
+    userId: varchar({ length: cuidLength })
+      .references(() => users.id, { onDelete: 'cascade' })
       .notNull(),
   },
   (table) => [primaryKey({ columns: [table.taskId, table.labelId] })],
