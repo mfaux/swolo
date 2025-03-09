@@ -119,7 +119,7 @@ export const getProjects = async (
         END`.as('labels'),
     })
     .from(projects)
-    .leftJoin(parentProject, eq(projects.parentId, parentProject.id))
+    .leftJoin(parentProject, eq(projects.parentProjectId, parentProject.id))
     .leftJoin(projectsToLabels, eq(projects.id, projectsToLabels.projectId))
     .leftJoin(labels, eq(projectsToLabels.labelId, labels.id))
     .limit(limit)

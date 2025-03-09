@@ -1,34 +1,30 @@
 import {
   AnyPgColumn,
-  primaryKey,
   pgTable as table,
   text,
   varchar,
 } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';
 import { z } from 'zod';
-import { users } from './users';
 import { createId, cuidLength, timestamps } from './utils';
+import { workspaces } from './workspaces';
 
-export const projects = table(
-  'projects',
-  {
-    id: varchar({ length: cuidLength })
-      .$defaultFn(() => createId())
-      .unique()
-      .notNull(),
-    name: text().notNull(),
-    description: text(),
-    ...timestamps,
-    parentId: varchar().references((): AnyPgColumn => projects.id, {
-      onDelete: 'cascade',
-    }),
-    userId: varchar({ length: cuidLength })
-      .references(() => users.id, { onDelete: 'cascade' })
-      .notNull(),
-  },
-  (table) => [primaryKey({ columns: [table.id, table.name, table.userId] })],
-);
+export const projects = table('projects', {
+  id: varchar({ length: cuidLength })
+    .$defaultFn(() => createId())
+    .unique()
+    .notNull()
+    .primaryKey(),
+  name: text().notNull(),
+  description: text(),
+  ...timestamps,
+  parentProjectId: varchar().references((): AnyPgColumn => projects.id, {
+    onDelete: 'cascade',
+  }),
+  workspaceId: varchar({ length: cuidLength })
+    .references(() => workspaces.id, { onDelete: 'cascade' })
+    .notNull(),
+});
 
 // Schema for inserting a project - can be used to validate API requests.
 // React hook form doesn't like nulls, so we exclude them from the schema.
@@ -44,5 +40,5 @@ export const insertProjectSchema = createInsertSchema(projects, {
     .trim()
     .max(1000, 'Maximum 1000 characters')
     .optional(),
-  parentId: z.string().optional(),
+  parentProjectId: z.string().optional(),
 });

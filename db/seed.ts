@@ -1,4 +1,3 @@
-import { getConstants, init } from '@paralleldrive/cuid2';
 import { db } from '.';
 import { labels } from './schema/labels';
 import { projects } from './schema/projects';
@@ -6,26 +5,38 @@ import { projectsToLabels } from './schema/projects-to-labels';
 import { tasks } from './schema/tasks';
 import { tasksToLabels } from './schema/tasks-to-labels';
 import { users } from './schema/users';
-
-const cuidLength = getConstants().bigLength;
-const createId = init({ length: cuidLength });
+import { createId } from './schema/utils';
+import { workspaces } from './schema/workspaces';
 
 function createIds(count: number) {
   return Array.from({ length: count }, createId);
 }
 
-const [labelFeat, labelBug, labelEnhancement, labelHobby, labelDev] =
-  createIds(5);
+const [
+  labelFeat,
+  labelBug,
+  labelEnhancement,
+  labelSports,
+  labelDev,
+  labelLearning,
+] = createIds(6);
 
 async function seed() {
   console.log('Starting seed process...');
   await seedUsers();
+  await seedWorkspaces();
   await seedLabels();
   await seedProjects();
   await seedTasks();
 
   console.log('Seed process completed successfully.');
 }
+
+const userId = 'fox';
+const spaces = {
+  hobby: 'hobby',
+  work: 'work',
+} as const;
 
 async function seedUsers() {
   await db.insert(users).values([
@@ -35,13 +46,29 @@ async function seedUsers() {
   ]);
 }
 
+async function seedWorkspaces() {
+  await db.insert(workspaces).values([
+    {
+      id: spaces.hobby,
+      name: 'Hobby',
+      userId,
+    },
+    {
+      id: spaces.work,
+      name: 'Work',
+      userId,
+    },
+  ]);
+}
+
 async function seedLabels() {
   await db.insert(labels).values([
-    { id: labelFeat, name: 'feat', userId: 'fox' },
-    { id: labelBug, name: 'bug', userId: 'fox' },
-    { id: labelEnhancement, name: 'enhancement', userId: 'fox' },
-    { id: labelHobby, name: 'hobby', userId: 'fox' },
-    { id: labelDev, name: 'dev', userId: 'fox' },
+    { id: labelFeat, name: 'feat', workspaceId: spaces.work },
+    { id: labelBug, name: 'bug', workspaceId: spaces.work },
+    { id: labelEnhancement, name: 'enhancement', workspaceId: spaces.work },
+    { id: labelDev, name: 'dev', workspaceId: spaces.work },
+    { id: labelSports, name: 'sports', workspaceId: spaces.hobby },
+    { id: labelLearning, name: 'learning', workspaceId: spaces.hobby },
   ]);
 }
 
@@ -51,20 +78,20 @@ async function seedProjects() {
       id: 'swolo',
       name: 'Project management app',
       description: 'Project management and note-taking app wit GTD principles.',
-      userId: 'fox',
+      workspaceId: spaces.work,
     },
     {
       id: 'db_subproject',
       name: 'Database subproject',
       description: 'Subproject for setting up database and API endpoints.',
-      userId: 'fox',
-      parentId: 'swolo',
+      workspaceId: spaces.work,
+      parentProjectId: 'swolo',
     },
   ]);
 
   await db.insert(projectsToLabels).values([
-    { projectId: 'swolo', labelId: labelHobby, userId: 'fox' },
-    { projectId: 'swolo', labelId: labelDev, userId: 'fox' },
+    { projectId: 'swolo', labelId: labelEnhancement },
+    { projectId: 'swolo', labelId: labelDev },
   ]);
 }
 
@@ -78,7 +105,7 @@ async function seedTasks() {
       title: 'Implement synching',
       description: 'Sync data from the cloud to the local desktop.',
       status: 'todo',
-      userId: 'fox',
+      workspaceId: spaces.work,
       projectId: 'swolo',
     },
     {
@@ -86,7 +113,7 @@ async function seedTasks() {
       title: 'Design app layout',
       description: 'Create wireframes and mockups for the app.',
       status: 'in-progress',
-      userId: 'fox',
+      workspaceId: spaces.work,
       projectId: 'swolo',
     },
     {
@@ -94,7 +121,7 @@ async function seedTasks() {
       title: 'Develop authentication module',
       description: 'Implement user login and registration functionality.',
       status: 'todo',
-      userId: 'fox',
+      workspaceId: spaces.work,
       projectId: 'swolo',
     },
     {
@@ -102,7 +129,7 @@ async function seedTasks() {
       title: 'Set up database',
       description: 'Configure the database schema and connections.',
       status: 'todo',
-      userId: 'fox',
+      workspaceId: spaces.work,
       projectId: 'swolo',
     },
     {
@@ -110,7 +137,7 @@ async function seedTasks() {
       title: 'Create API endpoints',
       description: 'Develop RESTful API endpoints for the app.',
       status: 'todo',
-      userId: 'fox',
+      workspaceId: spaces.work,
       projectId: 'swolo',
     },
     {
@@ -118,19 +145,19 @@ async function seedTasks() {
       title: 'Implement frontend',
       description: 'Build the frontend using React.',
       status: 'todo',
-      userId: 'fox',
+      workspaceId: spaces.work,
       projectId: 'swolo',
     },
   ]);
 
   await db.insert(tasksToLabels).values([
-    { taskId: myTask, labelId: labelFeat, userId: 'fox' },
-    { taskId: designLayout, labelId: labelEnhancement, userId: 'fox' },
-    { taskId: authModule, labelId: labelBug, userId: 'fox' },
-    { taskId: setupDb, labelId: labelFeat, userId: 'fox' },
-    { taskId: createApi, labelId: labelFeat, userId: 'fox' },
-    { taskId: createApi, labelId: labelDev, userId: 'fox' },
-    { taskId: frontend, labelId: labelDev, userId: 'fox' },
+    { taskId: myTask, labelId: labelFeat },
+    { taskId: designLayout, labelId: labelEnhancement },
+    { taskId: authModule, labelId: labelBug },
+    { taskId: setupDb, labelId: labelFeat },
+    { taskId: createApi, labelId: labelFeat },
+    { taskId: createApi, labelId: labelDev },
+    { taskId: frontend, labelId: labelDev },
   ]);
 }
 
