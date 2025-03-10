@@ -65,7 +65,7 @@ export default function ProjectDialog({
     defaultValues: {
       name: project?.name ?? '',
       description: project?.description ?? '',
-      parentId: project?.parentId ?? __SWOLO_NONE_SELECTED,
+      parentProjectId: project?.parentProjectId ?? __SWOLO_NONE_SELECTED,
     },
   });
 
@@ -175,7 +175,7 @@ export default function ProjectDialog({
                   <div className="space-y-2">
                     <FormField
                       control={form.control}
-                      name={'parentId'}
+                      name={'parentProjectId'}
                       render={({ field }) => (
                         <FormItem>
                           <Label htmlFor="project">Parent project</Label>

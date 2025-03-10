@@ -13,7 +13,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const projects = await getProjects({ userId: 'fox' });
+  // TODO: get query out of layout
+  const projects = await getProjects({ workspaceId: 'work' });
 
   return (
     <html lang="en" className={`${fontSans.variable}`}>

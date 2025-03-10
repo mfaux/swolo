@@ -12,10 +12,10 @@ type WithNonNullableProperties<TObj> = {
 };
 
 // Label whose fields are visible to the user.
-type Label = StrictOmit<typeof labels.$inferSelect, 'userId'>;
+type Label = StrictOmit<typeof labels.$inferSelect, 'workspaceId'>;
 
 // Project with fields visible to the user (but not necessarily editable)
-export type Project = StrictOmit<typeof projects.$inferSelect, 'userId'>;
+export type Project = StrictOmit<typeof projects.$inferSelect, 'workspaceId'>;
 export type ProjectWithLabels = {
   parentName?: string | null;
   labels: Label[];
@@ -24,7 +24,7 @@ export type ProjectWithLabels = {
 // Project with fields the user can edit
 export const projectFormSchema = insertProjectSchema.omit({
   id: true,
-  userId: true,
+  workspaceId: true,
   createdAt: true,
   updatedAt: true,
 });
@@ -34,7 +34,7 @@ export type ProjectFormData = WithNonNullableProperties<
 >;
 
 // Task with fields visible to the user (but not necessarily editable).
-type Task = StrictOmit<typeof tasks.$inferSelect, 'userId'>;
+type Task = StrictOmit<typeof tasks.$inferSelect, 'workspaceId'>;
 
 export type TaskWithLabels = {
   projectName: string | null;
@@ -44,7 +44,7 @@ export type TaskWithLabels = {
 // Task with fields the user can edit
 export const taskFormSchema = insertTaskSchema.omit({
   id: true,
-  userId: true,
+  workspaceId: true,
   createdAt: true,
   updatedAt: true,
 });
