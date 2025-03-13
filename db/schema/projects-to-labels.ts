@@ -5,7 +5,7 @@ import { projects } from './projects';
 // Join table for Project-Label many-to-many relationship
 
 export const projectsToLabels = table(
-  'project_labels',
+  'project_to_labels',
   {
     projectId: varchar()
       .references(() => projects.id, { onDelete: 'cascade' })
