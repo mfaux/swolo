@@ -7,17 +7,13 @@ import {
 import { createInsertSchema } from 'drizzle-zod';
 import { z } from 'zod';
 import { projects } from './projects';
-import { createId, cuidLength, timestamps } from './utils';
+import { cuidLength, timestamps } from './utils';
 import { workspaces } from './workspaces';
 
 export const tasks = table('tasks', {
-  id: varchar({ length: cuidLength })
-    .$defaultFn(() => createId())
-    .unique()
-    .notNull()
-    .primaryKey(),
+  id: varchar({ length: cuidLength }).unique().notNull().primaryKey(),
   title: text().notNull(),
-  status: text().notNull().default('todo'),
+  status: text(),
   description: text(),
   dueDate: timestamp(),
   ...timestamps,
@@ -39,4 +35,5 @@ export const insertTaskSchema = createInsertSchema(tasks, {
     .optional(),
   dueDate: z.date().optional(),
   projectId: z.string().optional(),
+  status: z.string().optional(),
 });
