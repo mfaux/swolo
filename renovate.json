@@ -9,9 +9,13 @@
   "packageRules": [
     {
       "matchUpdateTypes": ["patch"],
-      "groupName": "all patch updates",
-      "automerge": true
+      "groupName": "all patch updates"
+    },
+    {
+      "matchDepTypes": ["pin"],
+      "dependencyDashboardApproval": true,
+      "schedule": []
     }
   ],
-  "platformAutomerge": true
+  "platformAutomerge": false
 }
