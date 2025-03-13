@@ -6,15 +6,11 @@ import {
 } from 'drizzle-orm/pg-core';
 import { createInsertSchema } from 'drizzle-zod';
 import { z } from 'zod';
-import { createId, cuidLength, timestamps } from './utils';
+import { cuidLength, timestamps } from './utils';
 import { workspaces } from './workspaces';
 
 export const projects = table('projects', {
-  id: varchar({ length: cuidLength })
-    .$defaultFn(() => createId())
-    .unique()
-    .notNull()
-    .primaryKey(),
+  id: varchar({ length: cuidLength }).unique().notNull().primaryKey(),
   name: text().notNull(),
   description: text(),
   ...timestamps,

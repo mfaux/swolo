@@ -3,6 +3,7 @@
 import { db } from '@/db';
 import { projects } from '@/db/schema/projects';
 import { tasks } from '@/db/schema/tasks';
+import { createId } from '@/db/schema/utils';
 import {
   __SWOLO_NONE_SELECTED,
   ProjectFormData,
@@ -28,8 +29,10 @@ export const createProject = async (formData: FormData) => {
     // https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations#authentication-and-authorization
 
     await db.insert(projects).values({
+      id: createId(),
       name: projectName as string,
       workspaceId,
+      createdAt: new Date(),
     });
 
     revalidatePath('/');
@@ -67,11 +70,16 @@ export const upsertProject = async (formData: ProjectFormData, id?: string) => {
 
   try {
     if (updating) {
-      await db.update(projects).set(data).where(eq(projects.id, id));
+      await db
+        .update(projects)
+        .set({ ...data, updatedAt: new Date() })
+        .where(eq(projects.id, id));
     } else {
       await db.insert(projects).values({
+        id: createId(),
         ...data,
         workspaceId,
+        createdAt: new Date(),
       });
     }
   } catch (e) {
@@ -108,11 +116,16 @@ export const upsertTask = async (formData: TaskFormData, id?: string) => {
 
   try {
     if (updating) {
-      await db.update(tasks).set(data).where(eq(tasks.id, id));
+      await db
+        .update(tasks)
+        .set({ ...data, updatedAt: new Date() })
+        .where(eq(tasks.id, id));
     } else {
       await db.insert(tasks).values({
         ...data,
+        id: createId(),
         workspaceId,
+        createdAt: new Date(),
       });
     }
   } catch (e) {

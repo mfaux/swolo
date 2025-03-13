@@ -42,6 +42,7 @@ async function seedUsers() {
   await db.insert(users).values([
     {
       id: 'fox',
+      createdAt: new Date(),
     },
   ]);
 }
@@ -52,23 +53,55 @@ async function seedWorkspaces() {
       id: spaces.hobby,
       name: 'Hobby',
       userId,
+      createdAt: new Date(),
     },
     {
       id: spaces.work,
       name: 'Work',
       userId,
+      createdAt: new Date(),
     },
   ]);
 }
 
 async function seedLabels() {
   await db.insert(labels).values([
-    { id: labelFeat, name: 'feat', workspaceId: spaces.work },
-    { id: labelBug, name: 'bug', workspaceId: spaces.work },
-    { id: labelEnhancement, name: 'enhancement', workspaceId: spaces.work },
-    { id: labelDev, name: 'dev', workspaceId: spaces.work },
-    { id: labelSports, name: 'sports', workspaceId: spaces.hobby },
-    { id: labelLearning, name: 'learning', workspaceId: spaces.hobby },
+    {
+      id: labelFeat,
+      name: 'feat',
+      workspaceId: spaces.work,
+      createdAt: new Date(),
+    },
+    {
+      id: labelBug,
+      name: 'bug',
+      workspaceId: spaces.work,
+      createdAt: new Date(),
+    },
+    {
+      id: labelEnhancement,
+      name: 'enhancement',
+      workspaceId: spaces.work,
+      createdAt: new Date(),
+    },
+    {
+      id: labelDev,
+      name: 'dev',
+      workspaceId: spaces.work,
+      createdAt: new Date(),
+    },
+    {
+      id: labelSports,
+      name: 'sports',
+      workspaceId: spaces.hobby,
+      createdAt: new Date(),
+    },
+    {
+      id: labelLearning,
+      name: 'learning',
+      workspaceId: spaces.hobby,
+      createdAt: new Date(),
+    },
   ]);
 }
 
@@ -79,6 +112,7 @@ async function seedProjects() {
       name: 'Project management app',
       description: 'Project management and note-taking app wit GTD principles.',
       workspaceId: spaces.work,
+      createdAt: new Date(),
     },
     {
       id: 'db_subproject',
@@ -86,6 +120,7 @@ async function seedProjects() {
       description: 'Subproject for setting up database and API endpoints.',
       workspaceId: spaces.work,
       parentProjectId: 'swolo',
+      createdAt: new Date(),
     },
   ]);
 
@@ -107,6 +142,7 @@ async function seedTasks() {
       status: 'todo',
       workspaceId: spaces.work,
       projectId: 'swolo',
+      createdAt: new Date(),
     },
     {
       id: designLayout,
@@ -115,6 +151,7 @@ async function seedTasks() {
       status: 'in-progress',
       workspaceId: spaces.work,
       projectId: 'swolo',
+      createdAt: new Date(),
     },
     {
       id: authModule,
@@ -123,6 +160,7 @@ async function seedTasks() {
       status: 'todo',
       workspaceId: spaces.work,
       projectId: 'swolo',
+      createdAt: new Date(),
     },
     {
       id: setupDb,
@@ -131,6 +169,7 @@ async function seedTasks() {
       status: 'todo',
       workspaceId: spaces.work,
       projectId: 'swolo',
+      createdAt: new Date(),
     },
     {
       id: createApi,
@@ -139,6 +178,7 @@ async function seedTasks() {
       status: 'todo',
       workspaceId: spaces.work,
       projectId: 'swolo',
+      createdAt: new Date(),
     },
     {
       id: frontend,
@@ -147,6 +187,7 @@ async function seedTasks() {
       status: 'todo',
       workspaceId: spaces.work,
       projectId: 'swolo',
+      createdAt: new Date(),
     },
   ]);
 
