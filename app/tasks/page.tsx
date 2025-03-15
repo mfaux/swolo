@@ -1,8 +1,9 @@
 import Tasks from '@/app/tasks/_components/tasks';
-import { getProjects, getTasks } from '@/db/queries';
+import { projectRepo } from '@/db/repos/project-repo';
+import { taskRepo } from '@/db/repos/task-repo';
 
 export default async function TasksPage() {
-  const tasks = await getTasks({ workspaceId: 'work' });
-  const projects = await getProjects({ workspaceId: 'work' });
+  const tasks = await taskRepo.getMany({ workspaceId: 'work' });
+  const projects = await projectRepo.getMany({ workspaceId: 'work' });
   return <Tasks tasks={tasks} projects={projects} />;
 }

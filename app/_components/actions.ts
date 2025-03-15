@@ -1,9 +1,7 @@
 'use server';
 
-import { db } from '@/db';
-import { projects } from '@/db/schema/projects';
-import { tasks } from '@/db/schema/tasks';
-import { createId } from '@/db/schema/utils';
+import { projectRepo } from '@/db/repos/project-repo';
+import { taskRepo } from '@/db/repos/task-repo';
 import {
   __SWOLO_NONE_SELECTED,
   ProjectFormData,
@@ -11,7 +9,6 @@ import {
   TaskFormData,
   taskFormSchema,
 } from '@/shared/types';
-import { eq } from 'drizzle-orm';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 
@@ -25,14 +22,9 @@ export const createProject = async (formData: FormData) => {
   const { projectName } = rawFormData;
 
   try {
-    // TODO: ensure the user is authorized
-    // https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations#authentication-and-authorization
-
-    await db.insert(projects).values({
-      id: createId(),
+    await projectRepo.create({
       name: projectName as string,
       workspaceId,
-      createdAt: new Date(),
     });
 
     revalidatePath('/');
@@ -52,7 +44,6 @@ export const createProject = async (formData: FormData) => {
 };
 
 export const upsertProject = async (formData: ProjectFormData, id?: string) => {
-  // TODO: authorization. ensure user has access to id, project, labels, etc.
   const updating = id != null;
 
   const validatedData = projectFormSchema.safeParse(formData);
@@ -70,16 +61,11 @@ export const upsertProject = async (formData: ProjectFormData, id?: string) => {
 
   try {
     if (updating) {
-      await db
-        .update(projects)
-        .set({ ...data, updatedAt: new Date() })
-        .where(eq(projects.id, id));
+      await projectRepo.update(id, data);
     } else {
-      await db.insert(projects).values({
-        id: createId(),
+      await projectRepo.create({
         ...data,
         workspaceId,
-        createdAt: new Date(),
       });
     }
   } catch (e) {
@@ -98,7 +84,6 @@ export const upsertProject = async (formData: ProjectFormData, id?: string) => {
 };
 
 export const upsertTask = async (formData: TaskFormData, id?: string) => {
-  // TODO: authorization. ensure user has access to id, project, labels, etc.
   const updating = id != null;
 
   const validatedData = taskFormSchema.safeParse(formData);
@@ -116,17 +101,9 @@ export const upsertTask = async (formData: TaskFormData, id?: string) => {
 
   try {
     if (updating) {
-      await db
-        .update(tasks)
-        .set({ ...data, updatedAt: new Date() })
-        .where(eq(tasks.id, id));
+      await taskRepo.update(id, data);
     } else {
-      await db.insert(tasks).values({
-        ...data,
-        id: createId(),
-        workspaceId,
-        createdAt: new Date(),
-      });
+      await taskRepo.create({ ...data, workspaceId });
     }
   } catch (e) {
     const message = updating
