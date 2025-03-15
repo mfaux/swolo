@@ -3,7 +3,7 @@
   "extends": [
     "config:recommended",
     ":dependencyDashboard",
-    "schedule:earlyMondays"
+    "schedule:earlySaturdays"
   ],
   "separateMinorPatch": true,
   "packageRules": [
