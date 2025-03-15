@@ -1,7 +1,7 @@
 import { SidebarInset, SidebarProvider } from '@/components/ui/shadcn/sidebar';
 import { Toaster } from '@/components/ui/shadcn/sonner';
 import { HeaderBar } from '@/components/ui/shell/header-bar';
-import { getProjects } from '@/db/queries';
+import { projectRepo } from '@/db/repos/project-repo';
 import { fontSans } from '@/lib/fonts';
 import { AppSidebar } from './_components/app-sidebar/app-sidebar';
 import { Toolbar } from './_components/toolbar';
@@ -13,8 +13,7 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // TODO: get query out of layout
-  const projects = await getProjects({ workspaceId: 'work' });
+  const projects = await projectRepo.getMany({ workspaceId: 'work' });
 
   return (
     <html lang="en" className={`${fontSans.variable}`}>
