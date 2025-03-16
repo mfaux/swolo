@@ -10,7 +10,6 @@ import {
   taskFormSchema,
 } from '@/shared/types';
 import { revalidatePath } from 'next/cache';
-import { z } from 'zod';
 
 const workspaceId = 'work';
 
@@ -21,31 +20,21 @@ export const createProject = async (formData: FormData) => {
 
   const { projectName } = rawFormData;
 
-  try {
-    await projectRepo.create({
-      name: projectName as string,
-      workspaceId,
-    });
+  const res = await projectRepo.create({
+    name: projectName as string,
+    workspaceId,
+  });
 
+  if (res.success) {
     revalidatePath('/');
-    return { success: true };
-  } catch (e) {
-    console.error(e);
-    if (e instanceof z.ZodError) {
-      return { error: e.errors[0].message, previous: rawFormData };
-    } else if (e instanceof Error) {
-      return { error: e.message, previous: rawFormData };
-    }
-
-    return {
-      error: 'Failed to create project',
-    };
+  } else {
+    // TODO
   }
+
+  return res;
 };
 
 export const upsertProject = async (formData: ProjectFormData, id?: string) => {
-  const updating = id != null;
-
   const validatedData = projectFormSchema.safeParse(formData);
 
   if (!validatedData.success) {
@@ -59,33 +48,28 @@ export const upsertProject = async (formData: ProjectFormData, id?: string) => {
       ? undefined
       : formData.parentProjectId;
 
-  try {
-    if (updating) {
-      await projectRepo.update(id, data);
-    } else {
-      await projectRepo.create({
+  const updating = id != null;
+
+  const res = updating
+    ? await projectRepo.update(id, data)
+    : await projectRepo.create({
         ...data,
         workspaceId,
       });
+
+  if (res.success) {
+    revalidatePath('/projects');
+    if (data.parentProjectId !== __SWOLO_NONE_SELECTED) {
+      revalidatePath(`/projects/${data.parentProjectId}`);
     }
-  } catch (e) {
-    const message = updating
-      ? 'Failed to update project'
-      : 'Failed to create project';
-    return { error: message };
+  } else {
+    // TODO
   }
 
-  revalidatePath('/projects');
-
-  if (data.parentProjectId !== __SWOLO_NONE_SELECTED) {
-    revalidatePath(`/projects/${data.parentProjectId}`);
-  }
-  return { success: true };
+  return res;
 };
 
 export const upsertTask = async (formData: TaskFormData, id?: string) => {
-  const updating = id != null;
-
   const validatedData = taskFormSchema.safeParse(formData);
 
   if (!validatedData.success) {
@@ -99,24 +83,20 @@ export const upsertTask = async (formData: TaskFormData, id?: string) => {
       ? undefined
       : formData.projectId;
 
-  try {
-    if (updating) {
-      await taskRepo.update(id, data);
-    } else {
-      await taskRepo.create({ ...data, workspaceId });
+  const updating = id != null;
+  const res = updating
+    ? await taskRepo.update(id, data)
+    : await taskRepo.create({ ...data, workspaceId });
+
+  if (res.success) {
+    revalidatePath('/tasks');
+    revalidatePath('/projects');
+    if (data.projectId !== __SWOLO_NONE_SELECTED) {
+      revalidatePath(`/projects/${data.projectId}`);
     }
-  } catch (e) {
-    const message = updating
-      ? 'Failed to update task'
-      : 'Failed to create task';
-    return { error: message };
+  } else {
+    // TODO
   }
 
-  revalidatePath('/tasks');
-  revalidatePath('/projects');
-
-  if (data.projectId !== __SWOLO_NONE_SELECTED) {
-    revalidatePath(`/projects/${data.projectId}`);
-  }
-  return { success: true };
+  return res;
 };

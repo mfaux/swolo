@@ -13,22 +13,28 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const projects = await projectRepo.getMany({ workspaceId: 'work' });
+  const res = await projectRepo.getMany({ workspaceId: 'work' });
 
-  return (
-    <html lang="en" className={`${fontSans.variable}`}>
-      <body>
-        <SidebarProvider>
-          <AppSidebar />
-          <SidebarInset>
-            <HeaderBar>
-              <Toolbar projects={projects} />
-            </HeaderBar>
-            <main className="p-4">{children}</main>
-            <Toaster />
-          </SidebarInset>
-        </SidebarProvider>
-      </body>
-    </html>
-  );
+  if (!res.success) {
+    // TODO: error handlng
+  } else {
+    const projects = res.result;
+
+    return (
+      <html lang="en" className={`${fontSans.variable}`}>
+        <body>
+          <SidebarProvider>
+            <AppSidebar />
+            <SidebarInset>
+              <HeaderBar>
+                <Toolbar projects={projects} />
+              </HeaderBar>
+              <main className="p-4">{children}</main>
+              <Toaster />
+            </SidebarInset>
+          </SidebarProvider>
+        </body>
+      </html>
+    );
+  }
 }

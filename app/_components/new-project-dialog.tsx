@@ -44,11 +44,9 @@ const NewProjectDialog = ({
     if (res.success) {
       onOpenChange();
     } else {
-      if (res?.error) {
-        toast('An error occurred', {
-          description: res.error,
-        });
-      }
+      toast('An error occurred', {
+        description: res.error.message,
+      });
     }
   };
 
